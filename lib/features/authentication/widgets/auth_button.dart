@@ -5,7 +5,7 @@ import 'package:tiktok_clone/constants/sizes.dart';
 class AuthButton extends StatelessWidget {
   final String text;
   final FaIcon icon;
-  final StatelessWidget target;
+  final StatefulWidget target;
 
   const AuthButton({
     super.key,
