@@ -17,26 +17,18 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  void _onEmailTap(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const EmailScreen(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: const SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: Sizes.size40,
           ),
           child: Column(
             children: [
               Gaps.v80,
-              const Text(
+              Text(
                 'Sign Up for Tiktok',
                 style: TextStyle(
                   fontSize: Sizes.size24,
@@ -44,7 +36,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v20,
-              const Text(
+              Text(
                 'Create a profile, follow other accounts, make your own videos, and more.',
                 style: TextStyle(
                   fontSize: Sizes.size16,
@@ -53,27 +45,28 @@ class SignUpScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Gaps.v40,
-              GestureDetector(
-                onTap: () => _onEmailTap(context),
-                child: const AuthButton(
-                  icon: FaIcon(FontAwesomeIcons.user),
-                  text: "Use email & password",
-                ),
+              AuthButton(
+                icon: FaIcon(FontAwesomeIcons.user),
+                text: "Use email & password",
+                target: EmailScreen(),
               ),
               Gaps.v16,
-              const AuthButton(
+              AuthButton(
                 icon: FaIcon(FontAwesomeIcons.facebook),
                 text: "Continue with Facebook",
+                target: EmailScreen(),
               ),
               Gaps.v16,
-              const AuthButton(
+              AuthButton(
                 icon: FaIcon(FontAwesomeIcons.apple),
                 text: "Continue with Apple",
+                target: EmailScreen(),
               ),
               Gaps.v16,
-              const AuthButton(
+              AuthButton(
                 icon: FaIcon(FontAwesomeIcons.google),
                 text: "Continue with Google",
+                target: EmailScreen(),
               ),
             ],
           ),
