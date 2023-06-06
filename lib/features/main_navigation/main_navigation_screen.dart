@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/main_navigation/stf_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/nav_tab.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -14,21 +15,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
   final screens = [
-    const Center(
-      child: Text("Home"),
-    ),
-    const Center(
-      child: Text("Search"),
-    ),
-    const Center(
-      child: Text("Home"),
-    ),
-    const Center(
-      child: Text("Search"),
-    ),
-    const Center(
-      child: Text("Search"),
-    ),
+    // statefull screen을 동시에 사용하면 GlobalKey를 사용해야 한다.
+    StfScreen(key: GlobalKey()),
+    StfScreen(key: GlobalKey()),
+    Container(),
+    StfScreen(key: GlobalKey()),
+    StfScreen(key: GlobalKey()),
   ];
 
   void _onTap(int index) {
@@ -40,6 +32,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // 아래 두 가지 방법은 사용자가 다른 화면으로 갈 때마다 index를 바꾸게 되고
+      // 이전 화면은 완전히 없어진다. 그래서 다시 돌아와도 처음부터 화면을 만든다.
+      // 1.
+      // body: screens[_selectedIndex],
+      // 2.
+      body: screens.elementAt(_selectedIndex),
+      // 3. 사용자가 있던 위치를 기억하기를 원할 때
+      // 4. 화면을 폐기시켜 버리는 것이 아니라 잠시만 사라지게 하는 것은?
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Padding(
@@ -51,24 +51,28 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 text: "Home",
                 isSelected: _selectedIndex == 0,
                 icon: FontAwesomeIcons.house,
+                selectedIcon: FontAwesomeIcons.house,
                 onTap: () => _onTap(0),
               ),
               NavTab(
                 text: "Discover",
                 isSelected: _selectedIndex == 1,
-                icon: FontAwesomeIcons.magnifyingGlass,
+                icon: FontAwesomeIcons.compass,
+                selectedIcon: FontAwesomeIcons.solidCompass,
                 onTap: () => _onTap(1),
               ),
               NavTab(
                 text: "Inbox",
                 isSelected: _selectedIndex == 3,
                 icon: FontAwesomeIcons.message,
+                selectedIcon: FontAwesomeIcons.solidMessage,
                 onTap: () => _onTap(3),
               ),
               NavTab(
                 text: "Profile",
                 isSelected: _selectedIndex == 4,
                 icon: FontAwesomeIcons.user,
+                selectedIcon: FontAwesomeIcons.solidUser,
                 onTap: () => _onTap(4),
               ),
             ],
