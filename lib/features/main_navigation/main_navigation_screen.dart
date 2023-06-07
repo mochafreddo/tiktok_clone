@@ -16,6 +16,8 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
+  bool _isLongPress = false;
+
   // statefull screen을 동시에 사용하면 GlobalKey를 사용해야 한다.
   // final screens = [
   //   StfScreen(key: GlobalKey()),
@@ -104,8 +106,21 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               ),
               Gaps.h24,
               GestureDetector(
+                onLongPress: () {
+                  setState(() {
+                    _isLongPress = true;
+                  });
+                },
+                onLongPressUp: () {
+                  setState(() {
+                    _isLongPress = false;
+                  });
+                  _onPostVideoButtonTap();
+                },
                 onTap: _onPostVideoButtonTap,
-                child: const PostVideoButton(),
+                child: PostVideoButton(
+                  isLongPress: _isLongPress,
+                ),
               ),
               Gaps.h24,
               NavTab(
