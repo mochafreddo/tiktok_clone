@@ -31,6 +31,10 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPaused = false;
 
+  /*
+   * 비디오가 변경될 때마다 호출되는 콜백이다.
+   * 비디오가 끝나면 onVideoFinished 콜백을 호출한다.
+   */
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
       if (_videoPlayerController.value.duration ==
@@ -43,7 +47,7 @@ class _VideoPostState extends State<VideoPost>
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
     _videoPlayerController.play();
-    setState(() {});
+    setState(() {}); // 비디오가 준비되면 화면을 다시 그린다.
     _videoPlayerController.addListener(_onVideoChange); // 비디오가 변경될 때마다 호출된다.
   }
 
@@ -60,10 +64,13 @@ class _VideoPostState extends State<VideoPost>
       duration: _animationDuration, // 애니메이션의 지속 시간
     );
 
+    // build를 호출하는 첫 번째 방법
+    /*
     _animationController.addListener(() {
       // 애니메이션의 값이 변경될 때마다 호출된다.
       setState(() {}); // setState를 호출하면 애니메이션의 값이 변경될 때마다 위젯이 다시 그려진다.
     });
+    */
   }
 
   @override
@@ -115,8 +122,16 @@ class _VideoPostState extends State<VideoPost>
           Positioned.fill(
             child: IgnorePointer(
               child: Center(
-                child: Transform.scale(
-                  scale: _animationController.value, // 애니메이션의 값에 따라 크기가 변한다.
+                child: AnimatedBuilder(
+                  animation:
+                      _animationController, // _animationController의 변화를 감지한다.
+                  builder: (context, child) {
+                    // animationController의 값이 변할 때마다 실행됨
+                    return Transform.scale(
+                      scale: _animationController.value,
+                      child: child, // 아래 AnimatedOpacity 위젯이 child가 된다.
+                    );
+                  },
                   child: AnimatedOpacity(
                     opacity: _isPaused ? 1 : 0,
                     duration: _animationDuration,
