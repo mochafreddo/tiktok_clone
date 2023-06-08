@@ -97,8 +97,10 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
-    if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
-      // 화면에 보이고 비디오가 재생 중이지 않다면
+    if (info.visibleFraction == 1 &&
+        !_isPaused &&
+        !_videoPlayerController.value.isPlaying) {
+      // 화면에 보이는데 비디오가 재생되지 않는다면
       _videoPlayerController.play();
     }
   }
