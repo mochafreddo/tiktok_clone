@@ -41,6 +41,8 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPaused = false;
 
+  bool _showFullText = false;
+
   /*
    * 비디오가 변경될 때마다 호출되는 콜백이다.
    * 비디오가 끝나면 onVideoFinished 콜백을 호출한다.
@@ -160,13 +162,14 @@ class _VideoPostState extends State<VideoPost>
               ),
             ),
           ),
-          const Positioned(
+          Positioned(
             bottom: 25,
             left: 15,
+            width: MediaQuery.of(context).size.width - 100,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "@Geoffrey",
                   style: TextStyle(
                     fontSize: Sizes.size20,
@@ -175,12 +178,41 @@ class _VideoPostState extends State<VideoPost>
                   ),
                 ),
                 Gaps.v10,
-                Text(
-                  "Face Massage Roller Made Of Jade Material",
-                  style: TextStyle(
-                    fontSize: Sizes.size16,
-                    color: Colors.white,
-                  ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "Face Massage Roller Made Of Jade Material. This face massage roller, known for its cooling and healing properties, revitalizes the skin, reducing puffiness and wrinkles. Its dual-ended design allows for precise application on various areas of the face. With consistent use, one can expect to see a more youthful and vibrant complexion.",
+                        style: const TextStyle(
+                          fontSize: Sizes.size16,
+                          color: Colors.white,
+                        ),
+                        maxLines: _showFullText ? null : 2,
+                        // maxLines를 null로 설정하면 텍스트가 모두 표시된다.
+                        overflow: _showFullText
+                            ? TextOverflow.visible
+                            : TextOverflow.ellipsis,
+                        // TextOverflow.visible로 설정하면 텍스트가 모두 표시된다.
+                        // TextOverflow.ellipsis로 설정하면 텍스트가 잘린다.
+                      ),
+                    ),
+                    Gaps.h5,
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _showFullText = !_showFullText;
+                        });
+                      },
+                      child: Text(
+                        _showFullText ? "See less" : "See more",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
