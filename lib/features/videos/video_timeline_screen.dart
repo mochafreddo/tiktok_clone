@@ -61,6 +61,14 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
     super.dispose();
   }
 
+  Future<void> _onRefresh() {
+    // 아래는 fake future
+    return Future.delayed(
+      const Duration(seconds: 5),
+    );
+    // 여기서는 원래 API 요청을 보내던가 해야함.
+  }
+
   @override
   Widget build(BuildContext context) {
     // PageView는 아이템을 한 번에 전부 렌더링한다.
@@ -74,15 +82,22 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
     //     Container(color: Colors.pink),
     //   ],
     // );
-    return PageView.builder(
-      // PageView.builder를 사용하는 이유는 페이지가 많아지면 메모리를 많이 사용하기 때문이다.
-      controller: _pageController, // PageView를 제어하기 위한 컨트롤러
-      scrollDirection: Axis.vertical, // 페이지가 세로로 스크롤되게 한다.
-      onPageChanged: _onPageChanged, // 페이지가 바뀔 때마다 호출된다.
-      itemCount: _itemCount, // 페이지의 개수를 지정한다.
-      itemBuilder: (context, index) => VideoPost(
-        onVideoFinished: _onVideoFinished,
-        index: index,
+    return RefreshIndicator(
+      onRefresh: _onRefresh,
+      // onRefresh는 Future를 반환해야 한다. (혹은 async)
+      displacement: 50, // RefreshIndicator가 보여지는 위치
+      edgeOffset: 20, // RefreshIndicator가 보여지기 시작하는 위치
+      color: Theme.of(context).primaryColor,
+      child: PageView.builder(
+        // PageView.builder를 사용하는 이유는 페이지가 많아지면 메모리를 많이 사용하기 때문이다.
+        controller: _pageController, // PageView를 제어하기 위한 컨트롤러
+        scrollDirection: Axis.vertical, // 페이지가 세로로 스크롤되게 한다.
+        onPageChanged: _onPageChanged, // 페이지가 바뀔 때마다 호출된다.
+        itemCount: _itemCount, // 페이지의 개수를 지정한다.
+        itemBuilder: (context, index) => VideoPost(
+          onVideoFinished: _onVideoFinished,
+          index: index,
+        ),
       ),
     );
   }
