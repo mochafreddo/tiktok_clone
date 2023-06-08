@@ -47,10 +47,12 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
   }
 
   void _onVideoFinished() {
-    _pageController.nextPage(
+    return;
+    // 틱톡에서 자동으로 다음 영상으로 넘어가지 않는 것을 확인하여 기능 사용하지 않음.
+    /* _pageController.nextPage(
       duration: _scrollDuration,
       curve: _scrollCurve,
-    );
+    ); */
   }
 
   @override
