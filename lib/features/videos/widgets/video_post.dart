@@ -21,7 +21,15 @@ class VideoPost extends StatefulWidget {
 
 class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
-  // 애니메이션을 사용하기 위해 mixin을 추가한다.
+  // with: 다중 상속을 지원하는 키워드
+  // SingleTickerProviderStateMixin:
+  // current tree가 활성화된 동안만(위젯이 화면에 보일 때만) tick하는 단일 ticker를 제공
+  // Ticker는 시계라고 생각하면 도움이 된다. 이 시계는 function을 애니메이션의 프레임마다 실행. 애니메이션에 callback을 제공해준다.
+  // Ticker class는 애니메이션의 매 프레임마다 callback을 호출.
+  // 화면에 위젯이 없는데도 Ticker가 남아있으면 안 됨. 그러면 화면에 위젯이 없어도 미친듯이 callback을 호출.
+  // 그래서 current tree가 활성화된 동안만, 즉, 위젯이 화면에 보일 때만 tick하는 단일 ticker를 제공하는 것.
+  // TickerProviderStateMixin: 여러 개의 Ticker를 생성. multiple animation controller.
+  // SingleProviderStateMixin: single animation controller.
 
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/video.mp4");
@@ -57,7 +65,11 @@ class _VideoPostState extends State<VideoPost>
     _initVideoPlayer();
 
     _animationController = AnimationController(
-      vsync: this, // vsync를 this로 설정한다.
+      vsync: this,
+      // vsync: 위젯이 안 보일 때는 애니메이션이 작동하지 않도록 한다.
+      // SingleTickerProviderStateMixin을 사용해야 한다.
+      // this는 _VideoPostState 위젯(SingleTickerProviderStateMixin를 상속하는)을 의미한다.
+
       lowerBound: 1.0, // 애니메이션의 끝 값
       upperBound: 1.5, // 애니메이션의 시작 값
       value: 1.5, // 애니메이션의 시작 값
