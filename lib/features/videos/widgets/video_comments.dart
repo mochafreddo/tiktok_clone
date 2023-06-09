@@ -11,8 +11,23 @@ class VideoComments extends StatefulWidget {
 }
 
 class _VideoCommentsState extends State<VideoComments> {
+  bool _isWriting = false;
+
   void _onClosePressed() {
     Navigator.of(context).pop(); // 현재 화면을 pop
+  }
+
+  void _stopWriting() {
+    FocusScope.of(context).unfocus(); // 키보드가 올라와 있으면 내려가게 한다.
+    setState(() {
+      _isWriting = false;
+    }); // 키보드가 내려가면 _isWriting을 false로 바꾼다.
+  }
+
+  void _startWriting() {
+    setState(() {
+      _isWriting = true;
+    }); // 키보드가 올라오면 _isWriting을 true로 바꾼다.
   }
 
   @override
@@ -39,104 +54,153 @@ class _VideoCommentsState extends State<VideoComments> {
             ),
           ],
         ),
-        body: Stack(
-          children: [
-            ListView.separated(
-              padding: const EdgeInsets.symmetric(
-                vertical: Sizes.size10,
-                horizontal: Sizes.size16,
-              ),
-              separatorBuilder: (context, index) => Gaps.v10,
-              itemCount: 20,
-              itemBuilder: (context, index) => Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const CircleAvatar(
-                    radius: 18,
-                    child: Text("목화"),
-                  ),
-                  Gaps.h10,
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+        body: GestureDetector(
+          onTap: _stopWriting,
+          child: Stack(
+            children: [
+              ListView.separated(
+                padding: const EdgeInsets.symmetric(
+                  vertical: Sizes.size10,
+                  horizontal: Sizes.size16,
+                ),
+                separatorBuilder: (context, index) => Gaps.v10,
+                itemCount: 20,
+                itemBuilder: (context, index) => Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const CircleAvatar(
+                      radius: 18,
+                      child: Text("목화"),
+                    ),
+                    Gaps.h10,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Geoffrey",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: Sizes.size14,
+                              color: Colors.grey.shade500,
+                            ),
+                          ),
+                          Gaps.v3,
+                          const Text(
+                              "This breathtaking artwork truly captures the essence of beauty and evokes a sense of awe.")
+                        ],
+                      ),
+                    ),
+                    Gaps.h10,
+                    Column(
                       children: [
+                        FaIcon(
+                          FontAwesomeIcons.heart,
+                          size: Sizes.size20,
+                          color: Colors.grey.shade500,
+                        ),
+                        Gaps.v3,
                         Text(
-                          "Geoffrey",
+                          "52.2K",
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: Sizes.size14,
                             color: Colors.grey.shade500,
                           ),
                         ),
-                        Gaps.v3,
-                        const Text(
-                            "This breathtaking artwork truly captures the essence of beauty and evokes a sense of awe.")
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 0, // BottomAppBar를 화면 하단에 고정
+                width: size.width,
+                child: BottomAppBar(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Sizes.size16,
+                      vertical: Sizes.size10,
+                    ),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 18,
+                          backgroundColor: Colors.grey.shade500,
+                          foregroundColor: Colors.white,
+                          child: const Text("목화"),
+                        ),
+                        Gaps.h10,
+                        Expanded(
+                          child: SizedBox(
+                            // TextField의 높이를 고정하기 위해 SizedBox로 감싸줌
+                            height: Sizes.size44,
+                            child: TextField(
+                              onTap:
+                                  _startWriting, // 텍스트 필드를 누르면 키보드가 올라오면서 _startWriting 함수가 실행됨
+                              expands: true,
+                              minLines: null, // 최소 줄 수
+                              maxLines: null, // 최대 줄 수
+                              textInputAction: TextInputAction
+                                  .newline, // 키보드의 완료 버튼을 다음 줄로 바꿔줌
+                              cursorColor: Theme.of(context).primaryColor,
+                              decoration: InputDecoration(
+                                hintText: "Write a comment...",
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(Sizes.size12),
+                                  borderSide: BorderSide.none,
+                                ),
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                contentPadding: const EdgeInsets.symmetric(
+                                  vertical: Sizes.size12,
+                                  horizontal: Sizes.size10,
+                                ),
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.only(
+                                    right: Sizes.size14,
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      FaIcon(
+                                        FontAwesomeIcons.at,
+                                        color: Colors.grey.shade900,
+                                      ),
+                                      Gaps.h14,
+                                      FaIcon(
+                                        FontAwesomeIcons.gift,
+                                        color: Colors.grey.shade900,
+                                      ),
+                                      Gaps.h14,
+                                      FaIcon(
+                                        FontAwesomeIcons.faceSmile,
+                                        color: Colors.grey.shade900,
+                                      ),
+                                      Gaps.h14,
+                                      if (_isWriting)
+                                        GestureDetector(
+                                          onTap: _stopWriting,
+                                          child: FaIcon(
+                                            FontAwesomeIcons.circleArrowUp,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
-                  Gaps.h10,
-                  Column(
-                    children: [
-                      FaIcon(
-                        FontAwesomeIcons.heart,
-                        size: Sizes.size20,
-                        color: Colors.grey.shade500,
-                      ),
-                      Gaps.v3,
-                      Text(
-                        "52.2K",
-                        style: TextStyle(
-                          color: Colors.grey.shade500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              bottom: 0, // BottomAppBar를 화면 하단에 고정
-              width: size.width,
-              child: BottomAppBar(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Sizes.size16,
-                    vertical: Sizes.size10,
-                  ),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 18,
-                        backgroundColor: Colors.grey.shade500,
-                        foregroundColor: Colors.white,
-                        child: const Text("목화"),
-                      ),
-                      Gaps.h10,
-                      Expanded(
-                        child: TextField(
-                          cursorColor: Theme.of(context).primaryColor,
-                          decoration: InputDecoration(
-                            hintText: "Write a comment...",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(Sizes.size12),
-                              borderSide: BorderSide.none,
-                            ),
-                            filled: true,
-                            fillColor: Colors.grey.shade200,
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: Sizes.size12,
-                              horizontal: Sizes.size10,
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
         // bottomNavigationBar: BottomAppBar()
         // bottomNavigationBar를 사용하면 키보드가 들어갈 때 bottomNavigationBar가 다시 나타남. (밑에서부터 슬라이스업)
