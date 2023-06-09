@@ -128,6 +128,8 @@ class _VideoPostState extends State<VideoPost>
       context: context,
       builder: (context) => const VideoComments(),
       backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      // isScrollControlled는 bottom sheet 안에서 ListView를 사용할 것이라면 true로 설정.
     ); // showModalBottomSheet: 화면 아래에서 위로 올라오는 모달 창을 띄운다.
     // showModalBottomSheet의 Future는 유저가 댓글 창을 닫으면 resolve 된다.
 

@@ -49,6 +49,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, // 키보드가 올라오면 화면이 resize 되는 것을 방지
       backgroundColor: _selectedIndex == 0 ? Colors.black : Colors.white,
 
       // 아래 두 가지 방법은 사용자가 다른 화면으로 갈 때마다 index를 바꾸게 되고
