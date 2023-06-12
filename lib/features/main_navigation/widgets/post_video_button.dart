@@ -3,12 +3,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
 class PostVideoButton extends StatelessWidget {
-  final bool isLongPress;
-
   const PostVideoButton({
     super.key,
     required this.isLongPress,
+    required this.inverted,
   });
+
+  final bool isLongPress;
+  final bool inverted;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +61,7 @@ class PostVideoButton extends StatelessWidget {
             horizontal: Sizes.size12,
           ),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: inverted ? Colors.black : Colors.white,
             borderRadius: BorderRadius.circular(
               Sizes.size6,
             ),
@@ -67,7 +69,7 @@ class PostVideoButton extends StatelessWidget {
           child: Center(
             child: FaIcon(
               FontAwesomeIcons.plus,
-              color: Colors.black,
+              color: inverted ? Colors.white : Colors.black,
               size: isLongPress ? Sizes.size24 : Sizes.size16 + Sizes.size2,
             ),
           ),
