@@ -21,9 +21,24 @@ class DiscoverScreen extends StatefulWidget {
   State<DiscoverScreen> createState() => _DiscoverScreenState();
 }
 
-class _DiscoverScreenState extends State<DiscoverScreen> {
+class _DiscoverScreenState extends State<DiscoverScreen>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _textEditingController =
       TextEditingController(text: "Initial Text");
+
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tabController = TabController(
+      vsync: this,
+      length: tabs.length,
+    );
+    _tabController.addListener(_handleTabIndex);
+    _tabController.animation!.addListener(_handleTabAnimation);
+  }
 
   void _onSearchChanged(String value) {
     print("Searching form $value");
@@ -33,9 +48,31 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     print("Submitted $value");
   }
 
+  /// TabController의 index가 변경될 때마다 호출되는 함수
+  void _handleTabIndex() {
+    if (mounted) {
+      setState(() {});
+      if (_tabController.indexIsChanging) {
+        FocusScope.of(context).unfocus(); // 키보드가 올라와있을 때 탭을 누르면 키보드가 내려가는 옵션
+      }
+    }
+  }
+
+  /// TabController의 애니메이션이 시작될 때마다 호출되는 함수
+  void _handleTabAnimation() {
+    if (mounted) {
+      if (_tabController.animation!.status == AnimationStatus.forward) {
+        FocusScope.of(context).unfocus(); // 키보드가 올라와있을 때 탭을 누르면 키보드가 내려가는 옵션
+      }
+    }
+  }
+
   @override
   void dispose() {
     _textEditingController.dispose();
+    _tabController.removeListener(_handleTabIndex);
+    _tabController.removeListener(_handleTabAnimation);
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -59,6 +96,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           /// "prefer": 위젯 자체는 특정한 사이즈를 가지려고 하지만 그 위젯 안의 자식요소가 부모요소의 사이즈 제한을 받지 않는다.
           /// preferredsizewidget이 아니더라도 `PreferredSizeWidget(child: Container())`처럼 사용할 수는 있다.
           bottom: TabBar(
+            controller: _tabController,
             splashFactory: NoSplash.splashFactory, // 탭을 눌렀을 때 효과를 없애는 방법
             padding: const EdgeInsets.symmetric(
               horizontal: Sizes.size16,
@@ -77,6 +115,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           ),
         ),
         body: TabBarView(
+          controller: _tabController,
           children: [
             GridView.builder(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
