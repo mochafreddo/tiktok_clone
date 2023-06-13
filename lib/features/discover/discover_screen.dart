@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -13,8 +14,30 @@ final tabs = [
   "Brands",
 ];
 
-class DiscoverScreen extends StatelessWidget {
+class DiscoverScreen extends StatefulWidget {
   const DiscoverScreen({super.key});
+
+  @override
+  State<DiscoverScreen> createState() => _DiscoverScreenState();
+}
+
+class _DiscoverScreenState extends State<DiscoverScreen> {
+  final TextEditingController _textEditingController =
+      TextEditingController(text: "Initial Text");
+
+  void _onSearchChanged(String value) {
+    print("Searching form $value");
+  }
+
+  void _onSearchSubmitted(String value) {
+    print("Submitted $value");
+  }
+
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +45,19 @@ class DiscoverScreen extends StatelessWidget {
       // DefaultTabController: TabBar와 TabBarView를 연결해주는 위젯
       length: tabs.length, // tab의 개수
       child: Scaffold(
+        resizeToAvoidBottomInset: false, // 키보드가 올라오면 화면이 줄어드는 것을 방지
         appBar: AppBar(
           elevation: 1,
-          title: const Text('Discover'),
-          // PreferredSizeWidget: 특정한 크기를 가지려고 하지만 자식요소의 크기를 제한(Constrain)하지 않는 위젯
-          // "prefer": 위젯 자체는 특정한 사이즈를 가지려고 하지만 그 위젯 안의 자식요소가 부모요소의 사이즈 제한을 받지 않는다.
-          // preferredsizewidget이 아니더라도 `PreferredSizeWidget(child: Container())`처럼 사용할 수는 있다.
+          title: CupertinoSearchTextField(
+            controller: _textEditingController,
+            onChanged: _onSearchChanged,
+            onSubmitted: _onSearchSubmitted,
+          ),
+
+          /// AppBar의 bottom은 PreferredSizeWidget이다.
+          /// PreferredSizeWidget: 특정한 크기를 가지려고 하지만 자식요소의 크기를 제한(Constrain)하지 않는 위젯
+          /// "prefer": 위젯 자체는 특정한 사이즈를 가지려고 하지만 그 위젯 안의 자식요소가 부모요소의 사이즈 제한을 받지 않는다.
+          /// preferredsizewidget이 아니더라도 `PreferredSizeWidget(child: Container())`처럼 사용할 수는 있다.
           bottom: TabBar(
             splashFactory: NoSplash.splashFactory, // 탭을 눌렀을 때 효과를 없애는 방법
             padding: const EdgeInsets.symmetric(
@@ -49,6 +79,8 @@ class DiscoverScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             GridView.builder(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              // 키보드가 올라와있을 때 스크롤을 하면 키보드가 내려가는 옵션
               itemCount: 20, // 그리드의 요소 개수
               padding: const EdgeInsets.all(Sizes.size8),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -61,15 +93,22 @@ class DiscoverScreen extends StatelessWidget {
               // delegate는 controller와는 좀 다르고, 약간 assistant 같은 거.
               itemBuilder: (context, index) => Column(
                 children: [
-                  AspectRatio(
-                    // AspectRatio: 자식요소의 가로 세로 비율을 정해주는 위젯
-                    aspectRatio: 9 / 16, // 가로 세로 비율
-                    child: FadeInImage.assetNetwork(
-                        fit: BoxFit.cover, // 이미지가 화면에 꽉 차도록
-                        placeholder:
-                            "assets/images/placeholder.jpg", // 이미지가 로딩되기 전에 보여줄 이미지
-                        image:
-                            "https://images.unsplash.com/photo-1685718069436-86dfcf717c9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1764&q=80"),
+                  Container(
+                    clipBehavior: Clip.hardEdge,
+                    // AspectRatio의 이미지가 부모요소의 영역을 벗어나면 Clip.hardEdge로 인해 이미지가 잘린다.
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(Sizes.size4),
+                    ),
+                    child: AspectRatio(
+                      // AspectRatio: 자식요소의 가로 세로 비율을 정해주는 위젯
+                      aspectRatio: 9 / 16, // 가로 세로 비율
+                      child: FadeInImage.assetNetwork(
+                          fit: BoxFit.cover, // 이미지가 화면에 꽉 차도록
+                          placeholder:
+                              "assets/images/placeholder.jpg", // 이미지가 로딩되기 전에 보여줄 이미지
+                          image:
+                              "https://images.unsplash.com/photo-1685718069436-86dfcf717c9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1764&q=80"),
+                    ),
                   ),
                   Gaps.v10,
                   const Text(
