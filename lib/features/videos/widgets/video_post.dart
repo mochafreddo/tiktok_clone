@@ -93,34 +93,42 @@ class _VideoPostState extends State<VideoPost>
 
   @override
   void dispose() {
-    _videoPlayerController.dispose();
+    // 위젯이 화면에서 사라질 때 호출된다.
+    _videoPlayerController.dispose(); // 비디오 플레이어를 제거한다.
+    _animationController.dispose(); // 애니메이션을 제거한다.
     super.dispose();
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
-    if (info.visibleFraction == 1 &&
-        !_isPaused &&
-        !_videoPlayerController.value.isPlaying) {
-      // 화면에 보이는데 비디오가 재생되지 않는다면
-      _videoPlayerController.play();
-    }
-    if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
-      // 화면에 보이지 않는데 비디오가 재생된다면
-      _onTogglePause(); // 일시정지한다.
+    if (mounted && _videoPlayerController.value.isInitialized) {
+      // mounted: 위젯이 화면에 보이는지 여부를 확인하는 bool 값
+      if (info.visibleFraction == 1 &&
+          !_isPaused &&
+          !_videoPlayerController.value.isPlaying) {
+        // 화면에 보이는데 비디오가 재생되지 않는다면
+        _videoPlayerController.play();
+      }
+      if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
+        // 화면에 보이지 않는데 비디오가 재생된다면
+        _onTogglePause(); // 일시정지한다.
+      }
     }
   }
 
   void _onTogglePause() {
-    if (_videoPlayerController.value.isPlaying) {
-      _videoPlayerController.pause();
-      _animationController.reverse(); // 애니메이션을 역재생한다.
-    } else {
-      _videoPlayerController.play();
-      _animationController.forward(); // 애니메이션을 재생한다.
+    if (mounted && _videoPlayerController.value.isInitialized) {
+      // mounted: 위젯이 화면에 보이는지 여부를 확인하는 bool 값
+      if (_videoPlayerController.value.isPlaying) {
+        _videoPlayerController.pause();
+        _animationController.reverse(); // 애니메이션을 역재생한다.
+      } else {
+        _videoPlayerController.play();
+        _animationController.forward(); // 애니메이션을 재생한다.
+      }
+      setState(() {
+        _isPaused = !_isPaused;
+      });
     }
-    setState(() {
-      _isPaused = !_isPaused;
-    });
   }
 
   void _onCommentsTap(BuildContext context) async {
