@@ -38,6 +38,8 @@ class _ActivityScreenState extends State<ActivityScreen>
     },
   ];
 
+  bool _showBarrier = false;
+
   // late를 사용하면 변수 초기화문에서도 this를 참조할 수 있음.
   // this나 다른 instance member를 참조하려면 late를 사용해야함.
   late final AnimationController _animationController = AnimationController(
@@ -61,6 +63,11 @@ class _ActivityScreenState extends State<ActivityScreen>
     end: Offset.zero,
   ).animate(_animationController);
 
+  late final Animation<Color?> _barrierAnimation = ColorTween(
+    begin: Colors.transparent,
+    end: Colors.black38,
+  ).animate(_animationController);
+
   @override
   void initState() {
     super.initState();
@@ -71,12 +78,19 @@ class _ActivityScreenState extends State<ActivityScreen>
     setState(() {});
   }
 
-  void _onTitleTap() {
+  void _toggleAnimations() async {
     if (_animationController.isCompleted) {
-      _animationController.reverse();
+      // reverse를 동작이 끝난 다음에 _showBarrier를 바꾸고 싶다.
+      await _animationController.reverse();
     } else {
+      // forward를 await하는 건 원하지 않는다.
+      // forward가 실행될 때는 AnimatedModalBarrier도 바로 나오길 원한다.
       _animationController.forward();
     }
+
+    setState(() {
+      _showBarrier = !_showBarrier;
+    });
   }
 
   @override
@@ -85,7 +99,7 @@ class _ActivityScreenState extends State<ActivityScreen>
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: _onTitleTap,
+          onTap: _toggleAnimations,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -208,6 +222,12 @@ class _ActivityScreenState extends State<ActivityScreen>
                 ),
             ],
           ),
+          if (_showBarrier)
+            AnimatedModalBarrier(
+              color: _barrierAnimation,
+              dismissible: true, // true면 barrier를 클릭하면 애니메이션을 끝내고 사라짐
+              onDismiss: _toggleAnimations, // barrier를 클릭하면 onDismiss 콜백이 호출됨
+            ),
           SlideTransition(
             position: _panelAnimation,
             child: Container(
@@ -243,7 +263,7 @@ class _ActivityScreenState extends State<ActivityScreen>
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
