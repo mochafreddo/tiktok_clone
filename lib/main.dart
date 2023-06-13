@@ -20,6 +20,8 @@ class TikTokApp extends StatelessWidget {
           cursorColor: Color(0xFFE9435A), // 커서 색상
           // selectionColor: Color(0xFFE9435A), // 선택된 영역의 배경색
         ),
+        splashColor: Colors.transparent,
+        // highlightColor: Colors.transparent,
         appBarTheme: const AppBarTheme(
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
