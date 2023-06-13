@@ -10,9 +10,41 @@ class ActivityScreen extends StatefulWidget {
   State<ActivityScreen> createState() => _ActivityScreenState();
 }
 
-class _ActivityScreenState extends State<ActivityScreen> {
+class _ActivityScreenState extends State<ActivityScreen>
+    with SingleTickerProviderStateMixin {
   final List<String> _notifications = List.generate(20, (index) => '${index}h');
   // index: 각 아이템의 번호
+
+  // late를 사용하면 변수 초기화문에서도 this를 참조할 수 있음.
+  // this나 다른 instance member를 참조하려면 late를 사용해야함.
+  late final AnimationController _animationController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 200),
+  );
+
+  // animation에선 사용자에게 애니메이션 효과를 보여주기 위한 두 가지 방법이 있다.
+  // 1. AnimationController의 value를 수정하고 Controller에 eventListener를 추가한 뒤 setState를 하면 그게 build 메소드를 실행시키고 사용자에게 애니메이션의 단계들이 보여진다.
+  // 2. Animation Builder를 사용. Animation Builder가 우리 대신 위 작업을 해줌.
+  // 3. 아래와 같은 방법
+
+  // Tween에는 우리가 애니메이션 효과를 넣을 값의 type이 무엇인지 명시해줘야 함.
+  late final Animation<double> _animation = Tween(
+    begin: 0.0,
+    end: 0.5,
+  ).animate(_animationController);
+
+  void _onTitleTap() {
+    if (_animationController.isCompleted) {
+      _animationController.reverse();
+    } else {
+      _animationController.forward();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void _onDismissed(String notification) {
     _notifications.remove(notification);
@@ -21,10 +53,27 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(_notifications);
+    // print(_notifications);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All activity'),
+        title: GestureDetector(
+          onTap: _onTitleTap,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('All activity'),
+              Gaps.h2,
+              RotationTransition(
+                turns:
+                    _animation, // AnimationBuilder를 사용하지 않고 위에서 만든 animation을 사용
+                child: const FaIcon(
+                  FontAwesomeIcons.chevronDown,
+                  size: Sizes.size14,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: ListView(
         children: [
