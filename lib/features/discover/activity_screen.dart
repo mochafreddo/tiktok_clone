@@ -10,6 +10,11 @@ class ActivityScreen extends StatefulWidget {
   State<ActivityScreen> createState() => _ActivityScreenState();
 }
 
+// ticker는 매 애니메이션 프레임마다 호출되는 시계
+// Animation이 ticker를 사용한다.
+// ticker는 시스템 리소스를 아주 많이 사용한다.
+// 그래서 SingleTickerProviderStateMixin을 사용한다.
+// SingleTickerProviderStateMixin은 ticker를 제공하지만 위젯이 활성화되어 있지 않으면 ticker가 리소스를 사용하지 않도록 해준다.
 class _ActivityScreenState extends State<ActivityScreen>
     with SingleTickerProviderStateMixin {
   final List<String> _notifications = List.generate(20, (index) => '${index}h');
@@ -59,6 +64,7 @@ class _ActivityScreenState extends State<ActivityScreen>
   ).animate(_animationController);
 
   late final Animation<Offset> _panelAnimation = Tween(
+    // Offset => ratio
     begin: const Offset(0, -1),
     end: Offset.zero,
   ).animate(_animationController);
@@ -106,6 +112,7 @@ class _ActivityScreenState extends State<ActivityScreen>
         title: GestureDetector(
           onTap: _toggleAnimations,
           child: Row(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text('All activity'),
