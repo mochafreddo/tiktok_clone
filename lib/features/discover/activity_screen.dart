@@ -68,17 +68,16 @@ class _ActivityScreenState extends State<ActivityScreen>
     end: Colors.black38,
   ).animate(_animationController);
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void _onDismissed(String notification) {
     _notifications.remove(notification);
     setState(() {});
   }
 
   void _toggleAnimations() async {
+    if (_animationController.isAnimating) {
+      return;
+    }
+
     if (_animationController.isCompleted) {
       // reverse를 동작이 끝난 다음에 _showBarrier를 바꾸고 싶다.
       await _animationController.reverse();
@@ -91,6 +90,12 @@ class _ActivityScreenState extends State<ActivityScreen>
     setState(() {
       _showBarrier = !_showBarrier;
     });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
