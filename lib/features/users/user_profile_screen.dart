@@ -62,78 +62,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      children: [
-                        const Text(
-                          "92",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: Sizes.size18,
-                          ),
-                        ),
-                        Gaps.v3,
-                        Text(
-                          "Following",
-                          style: TextStyle(
-                            color: Colors.grey.shade500,
-                          ),
-                        ),
-                      ],
-                    ),
-                    VerticalDivider(
-                      // VerticalDivider는 특정 높이를 가진 father를 필요로 한다.
-                      // VerticalDivider는 father의 높이를 가져다가 사용하기 때문.
-                      width: Sizes.size32,
-                      thickness: Sizes.size1, // thickness: 선의 두께
-                      indent: Sizes.size14, // indent: 시작점에서의 간격
-                      endIndent: Sizes.size14, // endIndent: 끝점에서의 간격
-                      color: Colors.grey.shade400,
-                    ),
-                    Column(
-                      children: [
-                        const Text(
-                          "10M",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: Sizes.size18,
-                          ),
-                        ),
-                        Gaps.v3,
-                        Text(
-                          "Followers",
-                          style: TextStyle(
-                            color: Colors.grey.shade500,
-                          ),
-                        ),
-                      ],
-                    ),
-                    VerticalDivider(
-                      // VerticalDivider는 특정 높이를 가진 father를 필요로 한다.
-                      // VerticalDivider는 father의 높이를 가져다가 사용하기 때문.
-                      width: Sizes.size32,
-                      thickness: Sizes.size1, // thickness: 선의 두께
-                      indent: Sizes.size14, // indent: 시작점에서의 간격
-                      endIndent: Sizes.size14, // endIndent: 끝점에서의 간격
-                      color: Colors.grey.shade400,
-                    ),
-                    Column(
-                      children: [
-                        const Text(
-                          "194.3M",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: Sizes.size18,
-                          ),
-                        ),
-                        Gaps.v3,
-                        Text(
-                          "Likes",
-                          style: TextStyle(
-                            color: Colors.grey.shade500,
-                          ),
-                        ),
-                      ],
-                    ),
+                    _buildCountText("37", "Following"),
+                    _buildVerticalDivider(),
+                    _buildCountText("10.5M", "Followers"),
+                    _buildVerticalDivider(),
+                    _buildCountText("149.3M", "Likes"),
                   ],
                 ),
               )
@@ -141,6 +74,39 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           ),
         )
       ],
+    );
+  }
+
+  Widget _buildCountText(String count, String label) {
+    return Column(
+      children: [
+        Text(
+          count,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: Sizes.size18,
+          ),
+        ),
+        Gaps.v3,
+        Text(
+          label,
+          style: TextStyle(
+            color: Colors.grey.shade500,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVerticalDivider() {
+    return VerticalDivider(
+      // VerticalDivider는 특정 높이를 가진 father를 필요로 한다.
+      // VerticalDivider는 father의 높이를 가져다가 사용하기 때문.
+      width: Sizes.size32,
+      thickness: Sizes.size1, // thickness: 선의 두께
+      indent: Sizes.size14, // indent: 시작점에서의 간격
+      endIndent: Sizes.size14, // endIndent: 끝점에서의 간격
+      color: Colors.grey.shade400,
     );
   }
 }
