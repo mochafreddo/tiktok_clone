@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -14,124 +16,131 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return CustomScrollView(
       // CustomScrollView: 스크롤 가능한 위젯
       slivers: [
-        // slivers 안에는 wedget을 그냥 갖다넣을 수 없다.
-        // slivers를 그냥 '스크롤 가능한 구역'이라고 생각하면 된다.
         SliverAppBar(
-          // snap: true,
-          // floating: true,
-          // pinned: true,
-          stretch: true,
-          backgroundColor: Colors.teal,
-          collapsedHeight: 80,
-          expandedHeight: 200,
-          flexibleSpace: FlexibleSpaceBar(
-            stretchModes: const [
-              StretchMode.blurBackground,
-              StretchMode.zoomBackground,
-              StretchMode.fadeTitle
-            ],
-            background: Image.asset(
-              "assets/images/placeholder.jpg",
-              fit: BoxFit.cover,
+          title: const Text("목화"),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const FaIcon(
+                FontAwesomeIcons.gear,
+                size: Sizes.size20,
+              ),
             ),
-            title: const Text("Hello!"),
-          ),
+          ],
         ),
-        const SliverToBoxAdapter(
-          // SliverToBoxAdapter: 박스 위젯을 슬리버로 감싸는 위젯
+        SliverToBoxAdapter(
           child: Column(
             children: [
-              CircleAvatar(
-                backgroundColor: Colors.red,
-                radius: 20,
+              const CircleAvatar(
+                radius: 50,
+                foregroundImage: NetworkImage(
+                    "https://avatars.githubusercontent.com/u/76798197?v=4"),
+                child: Text("목화"),
               ),
+              Gaps.v20,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "@목화",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: Sizes.size18,
+                    ),
+                  ),
+                  Gaps.h5,
+                  FaIcon(
+                    FontAwesomeIcons.solidCircleCheck,
+                    size: Sizes.size16,
+                    color: Colors.blue.shade500,
+                  )
+                ],
+              ),
+              Gaps.v24,
+              SizedBox(
+                height: Sizes.size48,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        const Text(
+                          "92",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Sizes.size18,
+                          ),
+                        ),
+                        Gaps.v3,
+                        Text(
+                          "Following",
+                          style: TextStyle(
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    VerticalDivider(
+                      // VerticalDivider는 특정 높이를 가진 father를 필요로 한다.
+                      // VerticalDivider는 father의 높이를 가져다가 사용하기 때문.
+                      width: Sizes.size32,
+                      thickness: Sizes.size1, // thickness: 선의 두께
+                      indent: Sizes.size14, // indent: 시작점에서의 간격
+                      endIndent: Sizes.size14, // endIndent: 끝점에서의 간격
+                      color: Colors.grey.shade400,
+                    ),
+                    Column(
+                      children: [
+                        const Text(
+                          "10M",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Sizes.size18,
+                          ),
+                        ),
+                        Gaps.v3,
+                        Text(
+                          "Followers",
+                          style: TextStyle(
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    VerticalDivider(
+                      // VerticalDivider는 특정 높이를 가진 father를 필요로 한다.
+                      // VerticalDivider는 father의 높이를 가져다가 사용하기 때문.
+                      width: Sizes.size32,
+                      thickness: Sizes.size1, // thickness: 선의 두께
+                      indent: Sizes.size14, // indent: 시작점에서의 간격
+                      endIndent: Sizes.size14, // endIndent: 끝점에서의 간격
+                      color: Colors.grey.shade400,
+                    ),
+                    Column(
+                      children: [
+                        const Text(
+                          "194.3M",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Sizes.size18,
+                          ),
+                        ),
+                        Gaps.v3,
+                        Text(
+                          "Likes",
+                          style: TextStyle(
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )
             ],
-          ),
-        ),
-        SliverFixedExtentList(
-          // SliverFixedExtentList: 고정된 크기의 리스트
-          delegate: SliverChildBuilderDelegate(
-            // SliverChildBuilderDelegate: 리스트 아이템을 생성하는 델리게이트
-            childCount: 50, // 아이템 개수
-            (context, index) => Container(
-              color: Colors.amber[100 * (index % 9)],
-              child: Align(
-                alignment: Alignment.center,
-                child: Text("Item $index"),
-              ),
-            ),
-          ),
-          itemExtent: 100, // 높이
-        ),
-        SliverPersistentHeader(
-          // SliverPersistentHeader: 스크롤을 해도 사라지지 않는 헤더
-          delegate: CustomDelegate(),
-          // pinned: true,
-          floating: true,
-        ),
-        SliverGrid(
-          delegate: SliverChildBuilderDelegate(
-            // SliverChildBuilderDelegate: 그리드 아이템을 생성하는 델리게이트
-            childCount: 50, // childCount: 아이템 개수
-            (context, index) => Container(
-              color: Colors.blue[100 * (index % 9)],
-              child: Align(
-                alignment: Alignment.center,
-                child: Text("Item $index"),
-              ),
-            ),
-          ),
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            // SliverGridDelegateWithMaxCrossAxisExtent: 가로 방향으로 최대 크기를 가진 그리드
-            maxCrossAxisExtent: 100, // maxCrossAxisExtent: 그리드의 최대 크기
-            mainAxisSpacing: Sizes.size20,
-            crossAxisSpacing: Sizes.size20,
-            childAspectRatio: 1, // childAspectRatio: 그리드의 가로 세로 비율
           ),
         )
       ],
     );
-  }
-}
-
-class CustomDelegate extends SliverPersistentHeaderDelegate {
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    return Container(
-      color: Colors.indigo,
-      child: const FractionallySizedBox(
-        // FractionallySizedBox: 자식 위젯의 크기를 비율로 지정
-        // 부모로부터 최대한 많은 공간을 차지
-        heightFactor: 1, // heightFactor: 높이 비율
-        child: Center(
-          child: Text(
-            "Title!!!!!",
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  double get maxExtent => 150;
-  // maxExtent: 헤더의 최대 높이
-
-  @override
-  double get minExtent => 80;
-  // minExtent: 헤더의 최소 높이
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    // shouldRebuild: 헤더를 다시 빌드해야 하는지 여부를 반환
-    // true를 반환하면 헤더를 다시 빌드
-    // false를 반환하면 헤더를 다시 빌드하지 않음
-    return false;
   }
 }
