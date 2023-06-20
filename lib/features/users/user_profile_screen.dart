@@ -78,28 +78,66 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                     ),
                     Gaps.v14,
-                    FractionallySizedBox(
-                      // FractionallySizedBox: father의 너비와 높이에 의존해서 너비와 높이를 가진다.
-                      widthFactor: 0.33, // widthFactor: father의 너비에 대한 비율
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: Sizes.size12,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(Sizes.size4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          width: Sizes.size96 + Sizes.size96,
+                          height: Sizes.size48,
+                          // padding: const EdgeInsets.symmetric(
+                          //   vertical: Sizes.size12,
+                          // ),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(Sizes.size3),
+                            ),
+                          ),
+                          child: const Text(
+                            "Follow",
+                            style: TextStyle(
+                              fontSize: Sizes.size16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
-                        child: const Text(
-                          "Follow",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+                        Gaps.h4,
+                        Container(
+                          width: Sizes.size48,
+                          height: Sizes.size48,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey.shade300,
+                            ),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(Sizes.size3),
+                            ),
                           ),
-                          textAlign: TextAlign.center,
+                          child: const FaIcon(FontAwesomeIcons.youtube),
                         ),
-                      ),
+                        Gaps.h4,
+                        Container(
+                          width: Sizes.size48,
+                          height: Sizes.size48,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey.shade300,
+                            ),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(Sizes.size3),
+                            ),
+                          ),
+                          child: const FaIcon(
+                            FontAwesomeIcons.caretDown,
+                            size: Sizes.size14,
+                          ),
+                        ),
+                      ],
                     ),
                     Gaps.v14,
                     const Padding(
@@ -144,7 +182,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 keyboardDismissBehavior:
                     ScrollViewKeyboardDismissBehavior.onDrag,
-                itemCount: 20,
+                itemCount: 21,
                 padding: EdgeInsets.zero,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3, // crossAxisCount: 한 줄에 들어갈 아이템의 개수
@@ -153,7 +191,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   mainAxisSpacing: Sizes.size2, // mainAxisSpacing: 아이템들의 세로 간격
                   childAspectRatio: 9 / 14,
                 ),
-                itemBuilder: (context, index) => Column(
+                itemBuilder: (context, index) => Stack(
                   children: [
                     AspectRatio(
                       // AspectRatio: child의 가로 세로 비율을 설정할 수 있다.
@@ -162,8 +200,57 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           fit: BoxFit.cover,
                           placeholder: "assets/images/placeholder.jpg",
                           image:
-                              "https://images.unsplash.com/photo-1685718069436-86dfcf717c9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1764&q=80"),
+                              "https://cdn.pixabay.com/photo/2023/06/12/01/22/lotus-8057438_1280.jpg"),
                     ),
+                    const Positioned(
+                      bottom: Sizes.size7,
+                      left: Sizes.size7,
+                      child: Row(
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.play,
+                            size: Sizes.size12,
+                            color: Colors.white,
+                          ),
+                          Gaps.h5,
+                          Text(
+                            "4.1M",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: Sizes.size12,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (index == 0)
+                      Positioned(
+                        top: Sizes.size7,
+                        left: Sizes.size7,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(Sizes.size3),
+                            ),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: Sizes.size3,
+                              horizontal: Sizes.size5,
+                            ),
+                            child: Text(
+                              "Pinned",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: Sizes.size10,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -183,7 +270,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         Text(
           count,
           style: const TextStyle(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w800,
             fontSize: Sizes.size18,
           ),
         ),
@@ -191,7 +278,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         Text(
           label,
           style: TextStyle(
-            color: Colors.grey.shade500,
+            color: Colors.grey.shade600,
           ),
         ),
       ],
