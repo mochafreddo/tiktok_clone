@@ -100,18 +100,16 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
-    if (mounted && _videoPlayerController.value.isInitialized) {
-      // mounted: 위젯이 화면에 보이는지 여부를 확인하는 bool 값
-      if (info.visibleFraction == 1 &&
-          !_isPaused &&
-          !_videoPlayerController.value.isPlaying) {
-        // 화면에 보이는데 비디오가 재생되지 않는다면
-        _videoPlayerController.play();
-      }
-      if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
-        // 화면에 보이지 않는데 비디오가 재생된다면
-        _onTogglePause(); // 일시정지한다.
-      }
+    if (!mounted) return; // mounted: 위젯이 화면에 보이는지 여부를 확인하는 bool 값
+    if (info.visibleFraction == 1 &&
+        !_isPaused &&
+        !_videoPlayerController.value.isPlaying) {
+      // 화면에 보이는데 비디오가 재생되지 않는다면
+      _videoPlayerController.play();
+    }
+    if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
+      // 화면에 보이지 않는데 비디오가 재생된다면
+      _onTogglePause(); // 일시정지한다.
     }
   }
 
