@@ -183,6 +183,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               textColor: Colors.red,
               onTap: () {
                 showCupertinoDialog(
+                  // showCupertinoDialog는 팝업창 밖을 눌러도 없어지지 않는다.
                   context: context,
                   builder: (context) => CupertinoAlertDialog(
                     title: const Text("Are you sure?"),
@@ -194,7 +195,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       CupertinoDialogAction(
                         onPressed: () => Navigator.of(context).pop(),
-                        isDestructiveAction: true,
+                        isDestructiveAction: true, // red color
                         child: const Text("Yes"),
                       )
                     ],
@@ -222,6 +223,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(),
                         child: const Text("Yes"),
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+
+            /// Log out (iOS / Bottom)
+            /// showCupertinoModalPopup, CupertinoActionSheet
+            ListTile(
+              title: const Text("Log out (iOS / Bottom)"),
+              textColor: Colors.red,
+              onTap: () {
+                showCupertinoModalPopup(
+                  // showCupertinoModalPopup는 팝업창 밖을 누르면 창이 없어진다.
+                  // showCupertinoDialog는 팝업창 밖을 눌러도 안 닫히고, 창이 위에 열린다.
+                  context: context,
+                  builder: (context) => CupertinoActionSheet(
+                    // CupertinoActionSheet: iOS 스타일의 액션 시트
+                    title: const Text("Are you sure?"),
+                    message: const Text("Please doooooon gooooooo"),
+                    actions: [
+                      CupertinoActionSheetAction(
+                        isDefaultAction: true, // 글자가 더 굵다.
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text("Not log out"),
+                      ),
+                      CupertinoActionSheetAction(
+                        isDestructiveAction: true, // red color
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text("Yes plz."),
                       )
                     ],
                   ),
