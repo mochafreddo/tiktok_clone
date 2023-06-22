@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool _notifications = false;
+
+  void _onNotificationsChanged(bool? newValue) {
+    if (newValue == null) return;
+    setState(() {
+      _notifications = newValue;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +86,42 @@ class SettingsScreen extends StatelessWidget {
       ), */
         body: ListView(
           children: [
+            /* CupertinoSwitch(
+              // CupertinoSwitch: iOS 스타일의 스위치
+              value: _notifications,
+              onChanged: _onNotificationsChanged,
+            ), */
+            Switch.adaptive(
+              // Switch.adaptive(): 플랫폼에 맞는 스위치
+              value: _notifications,
+              onChanged: _onNotificationsChanged,
+            ),
+            /* SwitchListTile(
+              // SwitchListTile: 스위치를 포함한 리스트 타일
+              value: _notifications,
+              onChanged: _onNotificationsChanged,
+              title: const Text("Enable notifications"),
+            ), */
+            SwitchListTile.adaptive(
+              // SwitchListTile.adaptive(): 플랫폼에 맞는 스위치를 포함한 리스트 타일
+              value: _notifications,
+              onChanged: _onNotificationsChanged,
+              title: const Text("Enable notifications"),
+              subtitle: const Text("Enable notifications"),
+            ),
+            /* Checkbox(
+              // Checkbox: 체크박스
+              value: _notifications,
+              onChanged: _onNotificationsChanged,
+            ), */
+            CheckboxListTile(
+              // CheckboxListTile: 체크박스를 포함한 리스트 타일
+              // checkColor: Colors.black,
+              activeColor: Colors.black,
+              value: _notifications,
+              onChanged: _onNotificationsChanged,
+              title: const Text("Enable notifications"),
+            ),
             /* ListTile(
               onTap: () => showAboutDialog( // showAboutDialog: AboutDialog를 표시하는 함수
                 context: context,
