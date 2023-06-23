@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
 
-void main() {
+void main() async {
+  /// Flutter framework를 이용해 앱이 시작하기 전에 state를 어떤 식으로든 바꾸고 싶다면 engine 자체와 engine과 widget의 연결을 확실하게 초기화시켜야 한다.
+  /// 이렇게 하면 모든 widget들이 engine과 연결된 것을 확실하게 보장해줄 수 있다.
+  /// WidgetsFlutterBinding: This is the glue that binds the framework to the Flutter engine.
+  /// ensureInitialized(): You only need to call this method if you need the binding to be initialized before calling [runApp].
+  WidgetsFlutterBinding.ensureInitialized();
+
+  /// 앱이 시작하기 전에 화면 방향을 portrait로 고정시킨다.
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
+  /// 앱이 시작하기 전에 상태바의 색상을 검은색으로 고정시킨다.
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle.dark,
+  );
+
   runApp(const TikTokApp());
 }
 
@@ -12,6 +29,7 @@ class TikTokApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false, // 디버그 배너 제거
       title: 'TikTok Clone',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
@@ -33,8 +51,8 @@ class TikTokApp extends StatelessWidget {
           ),
         ),
       ),
-      // home: const SignUpScreen(),
-      home: const MainNavigationScreen(),
+      home: const SignUpScreen(),
+      // home: const MainNavigationScreen(),
       // home: const ActivityScreen(),
     );
   }

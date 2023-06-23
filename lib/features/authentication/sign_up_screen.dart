@@ -19,85 +19,134 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: Sizes.size40,
-          ),
-          child: Column(
-            children: [
-              Gaps.v80,
-              Text(
-                'Sign Up for Tiktok',
-                style: TextStyle(
-                  fontSize: Sizes.size24,
-                  fontWeight: FontWeight.w700,
-                ),
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        /* if (orientation == Orientation.landscape) {
+          return const Scaffold(
+            body: Center(
+              child: Text("Plz rotate ur phone."),
+            ),
+          );
+        } */
+        return Scaffold(
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Sizes.size40,
               ),
-              Gaps.v20,
-              Text(
-                'Create a profile, follow other accounts, make your own videos, and more.',
-                style: TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.black45,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Gaps.v40,
-              AuthButton(
-                icon: FaIcon(FontAwesomeIcons.user),
-                text: "Use email & password",
-                target: UsernameScreen(),
-              ),
-              Gaps.v16,
-              AuthButton(
-                icon: FaIcon(FontAwesomeIcons.facebook),
-                text: "Continue with Facebook",
-                target: UsernameScreen(),
-              ),
-              Gaps.v16,
-              AuthButton(
-                icon: FaIcon(FontAwesomeIcons.apple),
-                text: "Continue with Apple",
-                target: UsernameScreen(),
-              ),
-              Gaps.v16,
-              AuthButton(
-                icon: FaIcon(FontAwesomeIcons.google),
-                text: "Continue with Google",
-                target: UsernameScreen(),
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.grey.shade50,
-        elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: Sizes.size32,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Already have an account?'),
-              Gaps.h5,
-              GestureDetector(
-                onTap: () => _onLoginTap(context),
-                child: Text(
-                  'Log in',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).primaryColor,
+              child: Column(
+                children: [
+                  Gaps.v80,
+                  const Text(
+                    'Sign Up for Tiktok',
+                    style: TextStyle(
+                      fontSize: Sizes.size24,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ),
+                  Gaps.v20,
+                  const Text(
+                    'Create a profile, follow other accounts, make your own videos, and more.',
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                      color: Colors.black45,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Gaps.v40,
+                  if (orientation == Orientation.portrait) ...[
+                    const AuthButton(
+                      icon: FaIcon(FontAwesomeIcons.user),
+                      text: "Use email & password",
+                      target: UsernameScreen(),
+                    ),
+                    Gaps.v16,
+                    const AuthButton(
+                      icon: FaIcon(FontAwesomeIcons.facebook),
+                      text: "Continue with Facebook",
+                      target: UsernameScreen(),
+                    ),
+                    Gaps.v16,
+                    const AuthButton(
+                      icon: FaIcon(FontAwesomeIcons.apple),
+                      text: "Continue with Apple",
+                      target: UsernameScreen(),
+                    ),
+                    Gaps.v16,
+                    const AuthButton(
+                      icon: FaIcon(FontAwesomeIcons.google),
+                      text: "Continue with Google",
+                      target: UsernameScreen(),
+                    ),
+                  ],
+                  if (orientation == Orientation.landscape)
+                    const Row(
+                      children: [
+                        Expanded(
+                          child: AuthButton(
+                            icon: FaIcon(FontAwesomeIcons.user),
+                            text: "Use email & password",
+                            target: UsernameScreen(),
+                          ),
+                        ),
+                        Gaps.h16,
+                        Expanded(
+                          child: AuthButton(
+                            icon: FaIcon(FontAwesomeIcons.facebook),
+                            text: "Continue with Facebook",
+                            target: UsernameScreen(),
+                          ),
+                        ),
+                        Gaps.h16,
+                        Expanded(
+                          child: AuthButton(
+                            icon: FaIcon(FontAwesomeIcons.apple),
+                            text: "Continue with Apple",
+                            target: UsernameScreen(),
+                          ),
+                        ),
+                        Gaps.h16,
+                        Expanded(
+                          child: AuthButton(
+                            icon: FaIcon(FontAwesomeIcons.google),
+                            text: "Continue with Google",
+                            target: UsernameScreen(),
+                          ),
+                        ),
+                      ],
+                    ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+          bottomNavigationBar: BottomAppBar(
+            color: Colors.grey.shade50,
+            elevation: 2,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: Sizes.size32,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Already have an account?'),
+                  Gaps.h5,
+                  GestureDetector(
+                    onTap: () => _onLoginTap(context),
+                    child: Text(
+                      'Log in',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
