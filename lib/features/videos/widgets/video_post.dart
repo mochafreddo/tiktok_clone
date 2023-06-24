@@ -42,6 +42,7 @@ class _VideoPostState extends State<VideoPost>
   late final AnimationController _animationController;
 
   bool _isPaused = false;
+  bool _isMuted = false;
 
   bool _showFullText = false;
 
@@ -60,11 +61,12 @@ class _VideoPostState extends State<VideoPost>
 
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
-    // _videoPlayerController.play();
     await _videoPlayerController.setLooping(true); // 비디오가 끝나면 다시 처음부터 재생한다.
 
+    /// 웹에서는 비디오의 볼륨을 0으로 설정한다.
     if (kIsWeb) {
       await _videoPlayerController.setVolume(0.0);
+      _isMuted = true;
     }
 
     _videoPlayerController.addListener(_onVideoChange); // 비디오가 변경될 때마다 호출된다.
@@ -150,6 +152,20 @@ class _VideoPostState extends State<VideoPost>
     // showModalBottomSheet의 Future는 유저가 댓글 창을 닫으면 resolve 된다.
 
     _onTogglePause(); // 비디오를 다시 재생한다.
+  }
+
+  /// Toggles the mute state of the video player.
+  /// If the video is muted, it sets the volume to 0.0.
+  /// If the video is not muted, it sets the volume to 1.0.
+  void _toggleMute() {
+    setState(() {
+      _isMuted = !_isMuted;
+      if (_isMuted) {
+        _videoPlayerController.setVolume(0.0);
+      } else {
+        _videoPlayerController.setVolume(1.0);
+      }
+    });
   }
 
   @override
@@ -258,6 +274,16 @@ class _VideoPostState extends State<VideoPost>
             right: 15,
             child: Column(
               children: [
+                GestureDetector(
+                  onTap: _toggleMute,
+                  child: VideoButton(
+                    icon: _isMuted
+                        ? FontAwesomeIcons.volumeXmark
+                        : FontAwesomeIcons.volumeHigh,
+                    text: _isMuted ? "Muted" : "Unmute",
+                  ),
+                ),
+                Gaps.v24,
                 const CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
