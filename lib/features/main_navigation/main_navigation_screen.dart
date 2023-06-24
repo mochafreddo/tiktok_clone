@@ -17,7 +17,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 0; // 0: Home, 1: Discover, 3: Inbox, 4: Profile
+  int _selectedIndex = 1; // 0: Home, 1: Discover, 3: Inbox, 4: Profile
   bool _isLongPress = false;
 
   // statefull screen을 동시에 사용하면 GlobalKey를 사용해야 한다.

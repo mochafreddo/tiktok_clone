@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
@@ -98,6 +99,8 @@ class _DiscoverScreenState extends State<DiscoverScreen>
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    print(width);
     return DefaultTabController(
       // DefaultTabController: TabBar와 TabBarView를 연결해주는 위젯
       length: tabs.length, // tab의 개수
@@ -219,9 +222,9 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                 // 키보드가 올라와있을 때 스크롤을 하면 키보드가 내려가는 옵션
                 itemCount: 20, // 그리드의 요소 개수
                 padding: const EdgeInsets.all(Sizes.size8),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   // 그리드의 모양을 결정하는 위젯
-                  crossAxisCount: 2, // 한 줄에 몇 개의 요소를 넣을 것인지
+                  crossAxisCount: width > Breakpoints.lg ? 5 : 2, // 그리드의 열 개수
                   crossAxisSpacing: Sizes.size10, // 요소 사이의 간격
                   mainAxisSpacing: Sizes.size10, // 요소 사이의 간격
                   childAspectRatio: 9 / 20, // 요소의 가로 세로 비율
