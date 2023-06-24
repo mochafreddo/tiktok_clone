@@ -54,6 +54,38 @@ class TikTokApp extends StatelessWidget {
       // home: const SignUpScreen(),
       home: const MainNavigationScreen(),
       // home: const ActivityScreen(),
+      // home: const LayoutBuilderCodeLab(),
     );
   }
 }
+
+/* class LayoutBuilderCodeLab extends StatelessWidget {
+  const LayoutBuilderCodeLab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: SizedBox(
+        width: size.width / 2,
+        child: LayoutBuilder(
+          builder: (context, constraints) => Container(
+            // constraints: BoxConstraints box가 커질 수 있는 최대치를 알려준다.
+            width: constraints.maxWidth,
+            height: constraints.maxHeight,
+            color: Colors.teal,
+            child: Center(
+              child: Text(
+                "${size.width} / ${constraints.maxWidth}",
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 98,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+} */

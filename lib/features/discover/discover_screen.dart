@@ -230,71 +230,75 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                   childAspectRatio: 9 / 20, // 요소의 가로 세로 비율
                 ), // gridDelegate: 그리드의 모양을 결정하는 위젯
                 // delegate는 controller와는 좀 다르고, 약간 assistant 같은 거.
-                itemBuilder: (context, index) => Column(
-                  children: [
-                    Container(
-                      clipBehavior: Clip.hardEdge,
-                      // AspectRatio의 이미지가 부모요소의 영역을 벗어나면 Clip.hardEdge로 인해 이미지가 잘린다.
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Sizes.size4),
+                itemBuilder: (context, index) => LayoutBuilder(
+                  builder: (context, constraints) => Column(
+                    children: [
+                      Container(
+                        clipBehavior: Clip.hardEdge,
+                        // AspectRatio의 이미지가 부모요소의 영역을 벗어나면 Clip.hardEdge로 인해 이미지가 잘린다.
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Sizes.size4),
+                        ),
+                        child: AspectRatio(
+                          // AspectRatio: 자식요소의 가로 세로 비율을 정해주는 위젯
+                          aspectRatio: 9 / 16, // 가로 세로 비율
+                          child: FadeInImage.assetNetwork(
+                              fit: BoxFit.cover, // 이미지가 화면에 꽉 차도록
+                              placeholder:
+                                  "assets/images/placeholder.jpg", // 이미지가 로딩되기 전에 보여줄 이미지
+                              image:
+                                  "https://images.unsplash.com/photo-1685718069436-86dfcf717c9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1764&q=80"),
+                        ),
                       ),
-                      child: AspectRatio(
-                        // AspectRatio: 자식요소의 가로 세로 비율을 정해주는 위젯
-                        aspectRatio: 9 / 16, // 가로 세로 비율
-                        child: FadeInImage.assetNetwork(
-                            fit: BoxFit.cover, // 이미지가 화면에 꽉 차도록
-                            placeholder:
-                                "assets/images/placeholder.jpg", // 이미지가 로딩되기 전에 보여줄 이미지
-                            image:
-                                "https://images.unsplash.com/photo-1685718069436-86dfcf717c9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1764&q=80"),
+                      Gaps.v10,
+                      Text(
+                        "${constraints.maxWidth} This is a very long caption for my tiktok that im upload just now currently",
+                        overflow: TextOverflow.ellipsis, // 글자가 너무 길면 ...으로 표시
+                        maxLines: 2, // 최대 줄 수
+                        style: const TextStyle(
+                          fontSize: Sizes.size16 + Sizes.size2,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    Gaps.v10,
-                    const Text(
-                      "This is a very long caption for my tiktok that im upload just now currently",
-                      overflow: TextOverflow.ellipsis, // 글자가 너무 길면 ...으로 표시
-                      maxLines: 2, // 최대 줄 수
-                      style: TextStyle(
-                        fontSize: Sizes.size16 + Sizes.size2,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Gaps.v8,
-                    DefaultTextStyle(
-                      // DefaultTextStyle: 자식요소의 텍스트 스타일을 정해주는 위젯
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      child: Row(
-                        children: [
-                          const CircleAvatar(
-                            radius: 12,
-                            backgroundImage: NetworkImage(
-                                "https://avatars.githubusercontent.com/u/76798197?v=4"),
-                          ),
-                          Gaps.h4,
-                          const Expanded(
-                            child: Text(
-                              "My avatar is going to be very long",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Gaps.h4,
-                          FaIcon(
-                            FontAwesomeIcons.heart,
-                            size: Sizes.size16,
+                      Gaps.v8,
+                      if (constraints.maxWidth < 200 ||
+                          constraints.maxWidth > 250)
+                        DefaultTextStyle(
+                          // DefaultTextStyle: 자식요소의 텍스트 스타일을 정해주는 위젯
+                          style: TextStyle(
                             color: Colors.grey.shade600,
+                            fontWeight: FontWeight.w600,
                           ),
-                          Gaps.h2,
-                          const Text(
-                            "2.5M",
+                          child: Row(
+                            children: [
+                              const CircleAvatar(
+                                radius: 12,
+                                backgroundImage: NetworkImage(
+                                    "https://avatars.githubusercontent.com/u/76798197?v=4"),
+                              ),
+                              Gaps.h4,
+                              const Expanded(
+                                child: Text(
+                                  "My avatar is going to be very long",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Gaps.h4,
+                              FaIcon(
+                                FontAwesomeIcons.heart,
+                                size: Sizes.size16,
+                                color: Colors.grey.shade600,
+                              ),
+                              Gaps.h2,
+                              const Text(
+                                "2.5M",
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                  ],
+                        ),
+                    ],
+                  ),
                 ),
               ),
               for (var tab in tabs.skip(1))
