@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -61,6 +62,11 @@ class _VideoPostState extends State<VideoPost>
     await _videoPlayerController.initialize();
     // _videoPlayerController.play();
     await _videoPlayerController.setLooping(true); // 비디오가 끝나면 다시 처음부터 재생한다.
+
+    if (kIsWeb) {
+      await _videoPlayerController.setVolume(0.0);
+    }
+
     _videoPlayerController.addListener(_onVideoChange); // 비디오가 변경될 때마다 호출된다.
     setState(() {}); // 비디오가 준비되면 화면을 다시 그린다.
   }
