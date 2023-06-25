@@ -24,9 +24,9 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const SafeArea(
+      body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: Sizes.size40,
           ),
           child: Column(
@@ -34,13 +34,10 @@ class LoginScreen extends StatelessWidget {
               Gaps.v80,
               Text(
                 'Log in for Tiktok',
-                style: TextStyle(
-                  fontSize: Sizes.size24,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
               Gaps.v20,
-              Text(
+              const Text(
                 'Manage you account, check notifications, comment on videos, and more.',
                 style: TextStyle(
                   fontSize: Sizes.size16,
@@ -49,25 +46,25 @@ class LoginScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Gaps.v40,
-              AuthButton(
+              const AuthButton(
                 icon: FaIcon(FontAwesomeIcons.user),
                 text: "Use email & password",
                 target: LoginFormScreen(),
               ),
               Gaps.v16,
-              AuthButton(
+              const AuthButton(
                 icon: FaIcon(FontAwesomeIcons.facebook),
                 text: "Continue with Facebook",
                 target: UsernameScreen(),
               ),
               Gaps.v16,
-              AuthButton(
+              const AuthButton(
                 icon: FaIcon(FontAwesomeIcons.apple),
                 target: UsernameScreen(),
                 text: "Continue with Apple",
               ),
               Gaps.v16,
-              AuthButton(
+              const AuthButton(
                 icon: FaIcon(FontAwesomeIcons.google),
                 text: "Continue with Google",
                 target: UsernameScreen(),
