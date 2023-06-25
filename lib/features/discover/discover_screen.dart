@@ -100,7 +100,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    print(width);
+    // print(width);
     return DefaultTabController(
       // DefaultTabController: TabBar와 TabBarView를 연결해주는 위젯
       length: tabs.length, // tab의 개수
@@ -108,79 +108,87 @@ class _DiscoverScreenState extends State<DiscoverScreen>
         resizeToAvoidBottomInset: false, // 키보드가 올라오면 화면이 줄어드는 것을 방지
         appBar: AppBar(
           elevation: 1,
-          title: Row(
-            children: [
-              const FaIcon(
-                FontAwesomeIcons.angleLeft,
-                size: Sizes.size24,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Sizes.size14,
-                  ),
-                  child: SizedBox(
-                    height: Sizes.size36,
-                    child: TextField(
-                      controller: _textEditingController,
-                      onTap: _startSearch,
-                      cursorColor: Theme.of(context).primaryColor,
-                      decoration: InputDecoration(
-                        hintText: "Search",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(Sizes.size5),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey.shade200,
-                        contentPadding: const EdgeInsets.only(
-                          top: Sizes.size16,
-                        ),
-                        prefixIcon: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: Sizes.size11,
-                              ),
-                              child: FaIcon(
-                                FontAwesomeIcons.magnifyingGlass,
-                                size: Sizes.size16 + Sizes.size2,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                        suffixIcon: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (_isWriting)
+
+          /// ConstrainedBox: 자식요소의 크기를 제한(Constrain)하는 위젯
+          /// ConstrainedBox는 단지 constraints를 받아들이는 Container일 뿐이다.
+          title: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: Breakpoints.sm,
+            ),
+            child: Row(
+              children: [
+                const FaIcon(
+                  FontAwesomeIcons.angleLeft,
+                  size: Sizes.size24,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Sizes.size14,
+                    ),
+                    child: SizedBox(
+                      height: Sizes.size36,
+                      child: TextField(
+                        controller: _textEditingController,
+                        onTap: _startSearch,
+                        cursorColor: Theme.of(context).primaryColor,
+                        decoration: InputDecoration(
+                          hintText: "Search",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(Sizes.size5),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey.shade200,
+                          contentPadding: const EdgeInsets.only(
+                            top: Sizes.size16,
+                          ),
+                          prefixIcon: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
                               Padding(
-                                padding: const EdgeInsets.only(
-                                  // top: Sizes.size7,
-                                  left: Sizes.size16,
+                                padding: EdgeInsets.only(
+                                  left: Sizes.size11,
                                 ),
-                                child: GestureDetector(
-                                  onTap: _clearSearch,
-                                  child: FaIcon(
-                                    FontAwesomeIcons.solidCircleXmark,
-                                    color: Colors.grey.shade600,
-                                    size: Sizes.size20,
+                                child: FaIcon(
+                                  FontAwesomeIcons.magnifyingGlass,
+                                  size: Sizes.size16 + Sizes.size2,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                          suffixIcon: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (_isWriting)
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    // top: Sizes.size7,
+                                    left: Sizes.size16,
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: _clearSearch,
+                                    child: FaIcon(
+                                      FontAwesomeIcons.solidCircleXmark,
+                                      color: Colors.grey.shade600,
+                                      size: Sizes.size20,
+                                    ),
                                   ),
                                 ),
-                              ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              const FaIcon(
-                FontAwesomeIcons.sliders,
-                size: Sizes.size20,
-              ),
-            ],
+                const FaIcon(
+                  FontAwesomeIcons.sliders,
+                  size: Sizes.size20,
+                ),
+              ],
+            ),
           ),
           // title: CupertinoSearchTextField(
           //   controller: _textEditingController,
