@@ -35,7 +35,8 @@ class TikTokApp extends StatelessWidget {
       themeMode: ThemeMode.system, // ThemeMode.system: 시스템의 테마를 따라간다.
       theme: ThemeData(
         brightness: Brightness.light,
-        textTheme: TextTheme(
+        textTheme: GoogleFonts.itimTextTheme(),
+        /* textTheme: TextTheme(
           displayLarge: GoogleFonts.openSans(
             fontSize: 96,
             fontWeight: FontWeight.w300,
@@ -99,7 +100,7 @@ class TikTokApp extends StatelessWidget {
             fontWeight: FontWeight.w400,
             letterSpacing: 1.5,
           ),
-        ),
+        ), */
         scaffoldBackgroundColor: Colors.white,
         /* bottomAppBarTheme: BottomAppBarTheme(
           color: Colors.grey.shade50,
@@ -124,6 +125,11 @@ class TikTokApp extends StatelessWidget {
       ),
 
       darkTheme: ThemeData(
+        textTheme: GoogleFonts.itimTextTheme(
+          ThemeData(
+            brightness: Brightness.dark,
+          ).textTheme,
+        ),
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
         bottomAppBarTheme: BottomAppBarTheme(
