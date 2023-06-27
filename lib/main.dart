@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
 
 void main() async {
   /// Flutter framework를 이용해 앱이 시작하기 전에 state를 어떤 식으로든 바꾸고 싶다면 engine 자체와 engine과 widget의 연결을 확실하게 초기화시켜야 한다.
@@ -33,6 +33,7 @@ class TikTokApp extends StatelessWidget {
       title: 'TikTok Clone',
       themeMode: ThemeMode.system, // ThemeMode.system: 시스템의 테마를 따라간다.
       theme: ThemeData(
+        useMaterial3: true,
         brightness: Brightness.light,
 
         // This [TextTheme] provides color
@@ -119,6 +120,7 @@ class TikTokApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
+          surfaceTintColor: Colors.white,
           elevation: 0,
           titleTextStyle: TextStyle(
             color: Colors.black,
@@ -137,8 +139,11 @@ class TikTokApp extends StatelessWidget {
       ),
 
       darkTheme: ThemeData(
-        tabBarTheme: const TabBarTheme(
+        useMaterial3: true,
+        tabBarTheme: TabBarTheme(
           indicatorColor: Colors.white,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.grey.shade700,
         ),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Color(0xFFE9435A),
@@ -153,7 +158,19 @@ class TikTokApp extends StatelessWidget {
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
         appBarTheme: AppBarTheme(
+          surfaceTintColor: Colors.grey.shade900,
           backgroundColor: Colors.grey.shade900,
+          titleTextStyle: const TextStyle(
+            color: Colors.white,
+            fontSize: Sizes.size16 + Sizes.size2,
+            fontWeight: FontWeight.w600,
+          ),
+          actionsIconTheme: IconThemeData(
+            color: Colors.grey.shade100,
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.grey.shade100,
+          ),
         ),
         bottomAppBarTheme: BottomAppBarTheme(
           color: Colors.grey.shade900,
@@ -161,8 +178,8 @@ class TikTokApp extends StatelessWidget {
         primaryColor: const Color(0xFFE9435A),
       ),
 
-      // home: const SignUpScreen(),
-      home: const MainNavigationScreen(),
+      home: const SignUpScreen(),
+      // home: const MainNavigationScreen(),
       // home: const ActivityScreen(),
       // home: const LayoutBuilderCodeLab(),
     );
