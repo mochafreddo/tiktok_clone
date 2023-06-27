@@ -101,7 +101,8 @@ class _DiscoverScreenState extends State<DiscoverScreen>
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    // print(width);
+    final isDark = isDarkMode(context);
+
     return DefaultTabController(
       // DefaultTabController: TabBar와 TabBarView를 연결해주는 위젯
       length: tabs.length, // tab의 개수
@@ -139,28 +140,33 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                         ),
                         decoration: InputDecoration(
                           hintText: "Search",
+                          hintStyle: TextStyle(
+                            color: isDark ? Colors.grey.shade300 : null,
+                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(Sizes.size5),
                             borderSide: BorderSide.none,
                           ),
                           filled: true,
-                          fillColor: isDarkMode(context)
+                          fillColor: isDark
                               ? Colors.grey.shade700
                               : Colors.grey.shade300,
                           contentPadding: const EdgeInsets.only(
                             top: Sizes.size16,
                           ),
-                          prefixIcon: const Row(
+                          prefixIcon: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(
+                                padding: const EdgeInsets.only(
                                   left: Sizes.size11,
                                 ),
                                 child: FaIcon(
                                   FontAwesomeIcons.magnifyingGlass,
                                   size: Sizes.size16 + Sizes.size2,
-                                  color: Colors.black,
+                                  color: isDark
+                                      ? Colors.grey.shade200
+                                      : Colors.black,
                                 ),
                               ),
                             ],
@@ -178,7 +184,9 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                                     onTap: _clearSearch,
                                     child: FaIcon(
                                       FontAwesomeIcons.solidCircleXmark,
-                                      color: Colors.grey.shade600,
+                                      color: isDark
+                                          ? Colors.grey.shade300
+                                          : Colors.grey.shade600,
                                       size: Sizes.size20,
                                     ),
                                   ),

@@ -154,7 +154,6 @@ class TikTokApp extends StatelessWidget {
             brightness: Brightness.dark,
           ).textTheme,
         ), */
-
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
         appBarTheme: AppBarTheme(

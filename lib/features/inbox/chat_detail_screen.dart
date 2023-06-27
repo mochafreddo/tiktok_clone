@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class ChatDetailScreen extends StatefulWidget {
   const ChatDetailScreen({super.key});
@@ -13,6 +14,8 @@ class ChatDetailScreen extends StatefulWidget {
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
+
     return Scaffold(
       appBar: AppBar(
         title: ListTile(
@@ -51,18 +54,18 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             ),
           ),
           subtitle: const Text("Active now"),
-          trailing: const Row(
+          trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               FaIcon(
                 FontAwesomeIcons.flag,
-                color: Colors.black,
+                color: isDark ? Colors.grey.shade300 : Colors.black,
                 size: Sizes.size20,
               ),
               Gaps.h32,
               FaIcon(
                 FontAwesomeIcons.ellipsis,
-                color: Colors.black,
+                color: isDark ? Colors.grey.shade300 : Colors.black,
                 size: Sizes.size20,
               )
             ],
@@ -116,12 +119,16 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           Positioned(
             bottom: 0,
             width: MediaQuery.of(context).size.width, // 화면의 가로 길이
-            child: BottomAppBar(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Sizes.size18,
-                vertical: Sizes.size9,
+            child: Container(
+              padding: const EdgeInsets.only(
+                left: Sizes.size18,
+                right: Sizes.size18,
+                top: Sizes.size16,
+                bottom: Sizes.size40,
               ),
-              color: Colors.grey.shade200,
+              color: isDark
+                  ? Theme.of(context).bottomAppBarTheme.color
+                  : Colors.grey.shade200,
               child: Row(
                 children: [
                   Expanded(
@@ -129,13 +136,18 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     child: SizedBox(
                       height: Sizes.size44,
                       child: TextField(
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: Sizes.size16,
+                          color: isDark ? Colors.grey.shade800 : null,
                         ),
                         decoration: InputDecoration(
                           hintText: "Send a message...",
+                          hintStyle: TextStyle(
+                            color: isDark ? Colors.grey.shade800 : null,
+                          ),
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor:
+                              isDark ? Colors.grey.shade300 : Colors.white,
                           border: const OutlineInputBorder(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(Sizes.size20),

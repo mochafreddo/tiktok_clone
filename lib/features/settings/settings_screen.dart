@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -21,6 +22,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Settings'),
@@ -118,8 +121,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ), */
             CheckboxListTile(
               // CheckboxListTile: 체크박스를 포함한 리스트 타일
-              // checkColor: Colors.black,
               activeColor: Colors.black,
+              fillColor: MaterialStateProperty.all(
+                  isDark ? Colors.white : Colors.black),
               value: _notifications,
               onChanged: _onNotificationsChanged,
               title: const Text("Enable notifications"),
@@ -141,20 +145,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ), */
             ListTile(
               onTap: () async {
-                final date = await showDatePicker(
+                /* final date = await showDatePicker(
                   // showDatePicker: 날짜 선택기를 표시하는 함수
                   context: context,
                   initialDate: DateTime.now(),
                   firstDate: DateTime(1980),
                   lastDate: DateTime(2030),
                 );
-                print(date);
+                // print(date);
                 final time = await showTimePicker(
                   // showTimePicker: 시간 선택기를 표시하는 함수
                   context: context,
                   initialTime: TimeOfDay.now(),
                 );
-                print(time);
+                // print(time);
                 final booking = await showDateRangePicker(
                   // showDateRangePicker: 날짜 범위 선택기를 표시하는 함수
                   context: context,
@@ -171,8 +175,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       child: child!,
                     );
                   },
-                );
-                print(booking);
+                ); */
+                // print(booking);
               },
               title: const Text("What is your birthday?"),
             ),

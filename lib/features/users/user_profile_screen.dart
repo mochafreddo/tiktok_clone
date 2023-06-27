@@ -78,7 +78,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                       Gaps.v24,
                       SizedBox(
-                        height: Sizes.size48,
+                        height: Sizes.size52,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -198,11 +198,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   itemCount: 21,
                   padding: EdgeInsets.zero,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3, // crossAxisCount: 한 줄에 들어갈 아이템의 개수
-                    crossAxisSpacing:
-                        Sizes.size2, // crossAxisSpacing: 아이템들의 가로 간격
-                    mainAxisSpacing:
-                        Sizes.size2, // mainAxisSpacing: 아이템들의 세로 간격
+                    crossAxisCount: 3,
+                    crossAxisSpacing: Sizes.size2,
+                    mainAxisSpacing: Sizes.size2,
                     childAspectRatio: 9 / 14,
                   ),
                   itemBuilder: (context, index) => Stack(

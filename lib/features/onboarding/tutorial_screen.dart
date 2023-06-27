@@ -55,6 +55,8 @@ class _TutorialScreenState extends State<TutorialScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
+
     return GestureDetector(
       onPanUpdate: _onPanUpdate,
       onPanEnd: _onPanEnd,
@@ -127,7 +129,12 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 child: CupertinoButton(
                   onPressed: _onEnterAppTap,
                   color: Theme.of(context).primaryColor,
-                  child: const Text("Enter the app!"),
+                  child: Text(
+                    "Enter the app!",
+                    style: TextStyle(
+                      color: isDark ? Colors.grey.shade200 : Colors.white,
+                    ),
+                  ),
                 ),
               ),
             )),
