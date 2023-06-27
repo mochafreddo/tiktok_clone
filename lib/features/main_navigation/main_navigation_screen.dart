@@ -55,7 +55,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false, // 키보드가 올라오면 화면이 resize 되는 것을 방지
-      backgroundColor: _selectedIndex == 0 ? Colors.black : Colors.white,
+      backgroundColor:
+          _selectedIndex == 0 || isDark ? Colors.black : Colors.white,
 
       // 아래 두 가지 방법은 사용자가 다른 화면으로 갈 때마다 index를 바꾸게 되고
       // 이전 화면은 완전히 없어진다. 그래서 다시 돌아와도 처음부터 화면을 만든다.

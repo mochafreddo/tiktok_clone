@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 class PersistentTabBar extends SliverPersistentHeaderDelegate {
   // SliverPersistentHeaderDelegate: 스크롤이 가능한 위젯의 헤더를 만들어주는 위젯
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final isDark = isDarkMode(context);
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).appBarTheme.backgroundColor,
         border: Border.symmetric(
           horizontal: BorderSide(
-            color: Colors.grey.shade200,
+            color: isDark ? Colors.grey.shade700 : Colors.grey.shade200,
             width: 0.5,
           ),
         ),
       ),
-      child: const TabBar(
+      child: TabBar(
         // ⭐️ TabBar는 controller가 필요하다!
         indicatorSize: TabBarIndicatorSize.label,
-        indicatorColor: Colors.black,
-        labelPadding: EdgeInsets.symmetric(
+        indicatorColor: Theme.of(context).tabBarTheme.indicatorColor,
+        labelPadding: const EdgeInsets.symmetric(
           vertical: Sizes.size10,
         ),
-        labelColor: Colors.black,
-        tabs: [
+        tabs: const [
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: Sizes.size20,
