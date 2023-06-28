@@ -30,6 +30,7 @@ class TikTokApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    S.load(const Locale("en")); // intl_generated.dart
     return MaterialApp(
       debugShowCheckedModeBanner: false, // 디버그 배너 제거
       title: 'TikTok Clone',
