@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
+import 'package:tiktok_clone/features/settings/settings_screen.dart';
 
 void main() async {
   /// Flutter framework를 이용해 앱이 시작하기 전에 state를 어떤 식으로든 바꾸고 싶다면 engine 자체와 engine과 widget의 연결을 확실하게 초기화시켜야 한다.
@@ -31,6 +32,22 @@ class TikTokApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false, // 디버그 배너 제거
       title: 'TikTok Clone',
+      localizationsDelegates: const [
+        // 여기서 delegate란 일종의 번역 파일들로 생각하면 된다.
+        // Flutter에는 텍스트가 기본적으로 들어가 있는 위젯들이 있다.
+        // Flutter는 그런 위젯들의 번역이 이미 해놓았다.
+        // 그래서 아래처럼 Flutter가 기본으로 가지고 있는 위젯들에 대한 번역들을 include 하는 것.
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      // 앱이 어떤 언어를 지원하는 지 알려줘야 한다.
+      // ref: IANA Language Subtag Registry
+      supportedLocales: const [
+        Locale("en"),
+        Locale("ko"),
+        Locale("es"),
+      ],
       themeMode: ThemeMode.system, // ThemeMode.system: 시스템의 테마를 따라간다.
       theme: ThemeData(
         useMaterial3: true,
@@ -177,10 +194,11 @@ class TikTokApp extends StatelessWidget {
         primaryColor: const Color(0xFFE9435A),
       ),
 
-      home: const SignUpScreen(),
+      // home: const SignUpScreen(),
       // home: const MainNavigationScreen(),
       // home: const ActivityScreen(),
       // home: const LayoutBuilderCodeLab(),
+      home: const SettingsScreen(),
     );
   }
 }
