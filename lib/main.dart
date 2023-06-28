@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
 import 'package:flutter_gen/gen_l10n/intl_generated.dart';
@@ -33,8 +32,11 @@ class TikTokApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false, // 디버그 배너 제거
       title: 'TikTok Clone',
-      localizationsDelegates: const [
+      /* localizationsDelegates: const [
         // 여기서 delegate란 일종의 번역 파일들로 생각하면 된다.
+
+        // AppLocalizations.delegate의 좋은 점은
+        // supportedLocales의 리스트도 함께 제공한다는 것.
         AppLocalizations.delegate, // 앱의 번역 파일
 
         // Flutter에는 텍스트가 기본적으로 들어가 있는 위젯들이 있다.
@@ -43,14 +45,17 @@ class TikTokApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-      ],
+      ], */
+      localizationsDelegates:
+          AppLocalizations.localizationsDelegates, // 위의 주석과 같은 코드
       // 앱이 어떤 언어를 지원하는 지 알려줘야 한다.
       // ref: IANA Language Subtag Registry
-      supportedLocales: const [
+      /* supportedLocales: const [
         Locale("en"),
         Locale("ko"),
         Locale("es"),
-      ],
+      ], */
+      supportedLocales: AppLocalizations.supportedLocales, // 위의 주석과 같은 코드
       themeMode: ThemeMode.system, // ThemeMode.system: 시스템의 테마를 따라간다.
       theme: ThemeData(
         useMaterial3: true,
