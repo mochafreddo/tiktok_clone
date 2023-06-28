@@ -1,4 +1,0 @@
-arb-dir: lib/intl # <-- this is the directory where the arb files are located
-template-arb-file: intl_en.arb # <-- this is the arb file that contains the keys
-output-localization-file: intl_generated.dart # <-- this is the file that will be generated
-
