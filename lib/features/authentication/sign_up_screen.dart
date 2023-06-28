@@ -48,7 +48,10 @@ class SignUpScreen extends StatelessWidget {
                   Text(
                     // 'Sign Up for Tiktok',
                     // AppLocalizations.of(context)!.signUpTitle('TikTok'),
-                    S.of(context).signUpTitle('TikTok'), // intl_generated.dart
+                    S.of(context).signUpTitle(
+                          'TikTok',
+                          DateTime.now(),
+                        ), // intl_generated.dart
                     /* style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                           color: Colors.red,
                         ), */
