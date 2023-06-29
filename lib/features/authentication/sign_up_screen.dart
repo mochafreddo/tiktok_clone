@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/login_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
@@ -11,7 +10,8 @@ import 'package:tiktok_clone/utils.dart';
 // import 'package:flutter_gen/gen_l10n/intl_generated.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static String routeName = '/';
+  static const routeURL = '/';
+  static const routeName = 'signUp';
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
@@ -20,15 +20,21 @@ class SignUpScreen extends StatelessWidget {
         builder: (context) => const LoginScreen(),
       ),
     ); */
+
     // final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
     /* if (kDebugMode) {
       print(result);
     } */
-    context.push(LoginScreen.routeName);
+
+    // context.push(LoginScreen.routeName);
 
     /// go는 route stack에 관계없이 별도의 위치로 이동시킨다.
     /// go는 back 버튼을 원하지 않을 때 유용하다.
     // context.go(LoginScreen.routeName);
+
+    // context.pushNamed('username_screen');
+
+    context.pushNamed(UsernameScreen.routeName);
   }
 
   @override
