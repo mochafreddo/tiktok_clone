@@ -11,14 +11,16 @@ import 'package:tiktok_clone/utils.dart';
 // import 'package:flutter_gen/gen_l10n/intl_generated.dart';
 
 class SignUpScreen extends StatelessWidget {
+  static String routeName = '/';
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
-    final result = await Navigator.of(context).push(
+    /* final result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const LoginScreen(),
       ),
-    );
+    ); */
+    final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
     if (kDebugMode) {
       print(result);
     }
