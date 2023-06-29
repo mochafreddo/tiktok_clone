@@ -7,10 +7,12 @@ import 'package:tiktok_clone/features/users/widgets/persistent_tab_bar.dart';
 
 class UserProfileScreen extends StatefulWidget {
   final String username;
+  final String tab;
 
   const UserProfileScreen({
     super.key,
     required this.username,
+    required this.tab,
   });
 
   @override
@@ -33,6 +35,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       body: SafeArea(
         child: DefaultTabController(
           // DefaultTabController: TabBar와 TabBarView를 연결해주는 위젯
+          initialIndex: widget.tab == "likes" ? 1 : 0,
           length: 2, // length: TabBar의 탭 개수
           child: NestedScrollView(
             // NestedScrollView: 스크롤이 가능한 위젯

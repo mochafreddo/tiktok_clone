@@ -47,6 +47,7 @@ class AuthButton extends StatelessWidget {
     // Navigator.of(context).pushNamed(UsernameScreen.routeName);
     context.push(UsernameScreen.routeName);
     // context.go(UsernameScreen.routeName);
+    // context.push('/users/lynn?show=likes');
   }
 
   @override
