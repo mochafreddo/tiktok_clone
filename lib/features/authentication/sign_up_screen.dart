@@ -13,19 +13,22 @@ import 'package:tiktok_clone/utils.dart';
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
-  void _onLoginTap(BuildContext context) {
-    Navigator.of(context).push(
+  void _onLoginTap(BuildContext context) async {
+    final result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const LoginScreen(),
       ),
     );
+    if (kDebugMode) {
+      print(result);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
+    /* if (kDebugMode) {
       print(Localizations.localeOf(context));
-    }
+    } */
 
     return OrientationBuilder(
       builder: (context, orientation) {
