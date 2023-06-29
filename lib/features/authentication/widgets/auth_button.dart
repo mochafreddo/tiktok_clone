@@ -16,9 +16,30 @@ class AuthButton extends StatelessWidget {
 
   void _onTapFunction(BuildContext context) {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      /* MaterialPageRoute(
         builder: (context) => target,
-      ),
+      ), */
+      PageRouteBuilder(
+          transitionDuration: const Duration(seconds: 1),
+          reverseTransitionDuration: const Duration(seconds: 1),
+          pageBuilder: (context, animation, secondaryAnimation) => target,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            final offsetAnimation = Tween(
+              begin: const Offset(1, 0),
+              end: Offset.zero,
+            ).animate(animation);
+            final opacityAnimation = Tween(
+              begin: 0.5,
+              end: 1.0,
+            ).animate(animation);
+            return SlideTransition(
+              position: offsetAnimation,
+              child: FadeTransition(
+                opacity: opacityAnimation,
+                child: child,
+              ),
+            );
+          }),
     );
   }
 
