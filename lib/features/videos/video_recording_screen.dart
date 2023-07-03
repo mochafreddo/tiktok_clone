@@ -73,6 +73,21 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
     setState(() {});
   }
 
+  IconButton flashModeIcon(FlashMode flashMode) {
+    return IconButton(
+      color: _flashMode == flashMode ? Colors.amber.shade200 : Colors.white,
+      onPressed: () => _setFlashMode(flashMode),
+      icon: Icon(
+        switch (flashMode) {
+          FlashMode.off => Icons.flash_off_rounded,
+          FlashMode.always => Icons.flash_on_rounded,
+          FlashMode.auto => Icons.flash_auto_rounded,
+          FlashMode.torch => Icons.flashlight_on,
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,45 +127,13 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
                           ),
                         ),
                         Gaps.v10,
-                        IconButton(
-                          color: _flashMode == FlashMode.off
-                              ? Colors.amber.shade200
-                              : Colors.white,
-                          onPressed: () => _setFlashMode(FlashMode.off),
-                          icon: const Icon(
-                            Icons.flash_off_rounded,
-                          ),
-                        ),
+                        flashModeIcon(FlashMode.off),
                         Gaps.v10,
-                        IconButton(
-                          color: _flashMode == FlashMode.always
-                              ? Colors.amber.shade200
-                              : Colors.white,
-                          onPressed: () => _setFlashMode(FlashMode.always),
-                          icon: const Icon(
-                            Icons.flash_on_rounded,
-                          ),
-                        ),
+                        flashModeIcon(FlashMode.always),
                         Gaps.v10,
-                        IconButton(
-                          color: _flashMode == FlashMode.auto
-                              ? Colors.amber.shade200
-                              : Colors.white,
-                          onPressed: () => _setFlashMode(FlashMode.auto),
-                          icon: const Icon(
-                            Icons.flash_auto_rounded,
-                          ),
-                        ),
+                        flashModeIcon(FlashMode.auto),
                         Gaps.v10,
-                        IconButton(
-                          color: _flashMode == FlashMode.torch
-                              ? Colors.amber.shade200
-                              : Colors.white,
-                          onPressed: () => _setFlashMode(FlashMode.torch),
-                          icon: const Icon(
-                            Icons.flashlight_on,
-                          ),
-                        ),
+                        flashModeIcon(FlashMode.torch),
                       ],
                     ),
                   )
