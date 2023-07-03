@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/video_preview_screen.dart';
 
 class VideoRecordingScreen extends StatefulWidget {
   const VideoRecordingScreen({super.key});
@@ -49,9 +50,14 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     _cameraController = CameraController(
       cameras[_isSelfieMode ? 1 : 0],
       ResolutionPreset.ultraHigh,
+      // enableAudio: false, // for emulator
     );
 
     await _cameraController.initialize();
+
+    /// only for iOS.
+    /// iOS에서 영상을 녹화할 때, 가끔 영상과 오디오 싱크가 맞지 않는 경우가 생긴다.
+    await _cameraController.prepareForVideoRecording();
 
     _flashMode = _cameraController.value.flashMode;
   }
@@ -115,14 +121,37 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     );
   }
 
-  void _startRecording(TapDownDetails _) {
+  Future<void> _startRecording(TapDownDetails _) async {
+    if (_cameraController.value.isRecordingVideo) return;
+
+    await _cameraController.startVideoRecording();
+
     _buttonAnimationController.forward();
     _progressAnimationController.forward();
   }
 
-  void _stopRecording() {
+  Future<void> _stopRecording() async {
+    if (!_cameraController.value.isRecordingVideo) return;
+
     _buttonAnimationController.reverse();
     _progressAnimationController.reset();
+
+    final video = await _cameraController.stopVideoRecording();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VideoPreviewScreen(video: video),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _progressAnimationController.dispose();
+    _buttonAnimationController.dispose();
+    _cameraController.dispose();
+    super.dispose();
   }
 
   @override
