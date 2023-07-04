@@ -14,17 +14,8 @@ class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   void _onSignUpTap(BuildContext context) {
-    // Navigator.of(context).pop('Hello!');
     context.pop();
   }
-
-  // void _onEmailLoginTap(BuildContext context) {
-  //   Navigator.of(context).push(
-  //     MaterialPageRoute(
-  //       builder: (context) => const LoginFormScreen(),
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +30,6 @@ class LoginScreen extends StatelessWidget {
               Gaps.v80,
               Text(
                 'Log in for Tiktok',
-                // style: Theme.of(context).textTheme.headlineLarge,
                 style: TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
@@ -52,7 +42,6 @@ class LoginScreen extends StatelessWidget {
                   'Manage you account, check notifications, comment on videos, and more.',
                   style: TextStyle(
                     fontSize: Sizes.size16,
-                    // color: Colors.black45,
                   ),
                   textAlign: TextAlign.center,
                 ),

@@ -3,11 +3,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/login_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/utils.dart';
-// import 'package:flutter_gen/gen_l10n/intl_generated.dart';
 
 class SignUpScreen extends StatelessWidget {
   static const routeURL = '/';
@@ -15,43 +15,22 @@ class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
-    /* final result = await Navigator.of(context).push(
+    context.pushNamed(LoginScreen.routeName);
+  }
+
+  void _onEmailTap(BuildContext context) async {
+    Navigator.push(
+      context,
       MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
+        builder: (context) => const UsernameScreen(),
       ),
-    ); */
-
-    // final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
-    /* if (kDebugMode) {
-      print(result);
-    } */
-
-    // context.push(LoginScreen.routeName);
-
-    /// go는 route stack에 관계없이 별도의 위치로 이동시킨다.
-    /// go는 back 버튼을 원하지 않을 때 유용하다.
-    // context.go(LoginScreen.routeName);
-
-    // context.pushNamed('username_screen');
-
-    context.pushNamed(UsernameScreen.routeName);
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    /* if (kDebugMode) {
-      print(Localizations.localeOf(context));
-    } */
-
     return OrientationBuilder(
       builder: (context, orientation) {
-        /* if (orientation == Orientation.landscape) {
-          return const Scaffold(
-            body: Center(
-              child: Text("Plz rotate ur phone."),
-            ),
-          );
-        } */
         return Scaffold(
           body: SafeArea(
             child: Padding(
@@ -62,21 +41,10 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   Gaps.v80,
                   Text(
-                    // 'Sign Up for Tiktok',
-                    // AppLocalizations.of(context)!.signUpTitle('TikTok'),
                     S.of(context).signUpTitle(
                           'TikTok',
                           DateTime.now(),
                         ), // intl_generated.dart
-                    /* style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                          color: Colors.red,
-                        ), */
-                    /* style: GoogleFonts.abrilFatface(
-                      textStyle: const TextStyle(
-                        fontSize: Sizes.size24,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ), */
                     style: const TextStyle(
                       fontSize: Sizes.size24,
                       fontWeight: FontWeight.w700,

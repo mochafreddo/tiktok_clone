@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/username_screen.dart';
 
 class AuthButton extends StatelessWidget {
   final String text;
@@ -17,37 +15,12 @@ class AuthButton extends StatelessWidget {
   });
 
   void _onTapFunction(BuildContext context) {
-    /* Navigator.of(context).push(
-      /* MaterialPageRoute(
+    Navigator.push(
+      context,
+      MaterialPageRoute(
         builder: (context) => target,
-      ), */
-      PageRouteBuilder(
-        transitionDuration: const Duration(seconds: 1),
-        reverseTransitionDuration: const Duration(seconds: 1),
-        pageBuilder: (context, animation, secondaryAnimation) => target,
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          final offsetAnimation = Tween(
-            begin: const Offset(1, 0),
-            end: Offset.zero,
-          ).animate(animation);
-          final opacityAnimation = Tween(
-            begin: 0.5,
-            end: 1.0,
-          ).animate(animation);
-          return SlideTransition(
-            position: offsetAnimation,
-            child: FadeTransition(
-              opacity: opacityAnimation,
-              child: child,
-            ),
-          );
-        },
       ),
-    ); */
-    // Navigator.of(context).pushNamed(UsernameScreen.routeName);
-    context.push(UsernameScreen.routeName);
-    // context.go(UsernameScreen.routeName);
-    // context.push('/users/lynn?show=likes');
+    );
   }
 
   @override
