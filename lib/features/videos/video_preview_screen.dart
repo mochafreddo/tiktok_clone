@@ -1,11 +1,12 @@
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:video_player/video_player.dart';
 
+// VideoPreviewScreen allows users to preview the video
+// and provides an option to save the video to gallery
 class VideoPreviewScreen extends StatefulWidget {
   final XFile video;
   final bool isPicked;
@@ -22,9 +23,15 @@ class VideoPreviewScreen extends StatefulWidget {
 
 class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
   late final VideoPlayerController _videoPlayerController;
+  bool _savedVideo = false; // a flag to indicate if the video has been saved
 
-  bool _savedVideo = false;
+  @override
+  void initState() {
+    super.initState();
+    _initVideo();
+  }
 
+  // This function initializes the video player controller
   Future<void> _initVideo() async {
     _videoPlayerController = VideoPlayerController.file(
       File(widget.video.path),
@@ -37,12 +44,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
     setState(() {});
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _initVideo();
-  }
-
+  // This function saves the video to the user's gallery
   Future<void> _saveToGallery() async {
     if (_savedVideo) return;
 
@@ -56,6 +58,13 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
     setState(() {});
   }
 
+  @override
+  void dispose() {
+    _videoPlayerController.dispose();
+    super.dispose();
+  }
+
+  // Builds the preview screen UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(
