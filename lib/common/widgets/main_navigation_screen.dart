@@ -11,6 +11,7 @@ import 'package:tiktok_clone/features/users/user_profile_screen.dart';
 import 'package:tiktok_clone/features/videos/video_timeline_screen.dart';
 import 'package:tiktok_clone/utils.dart';
 
+// Represents the main navigation screen
 class MainNavigationScreen extends StatefulWidget {
   static const routeName = 'mainNavigation';
 
@@ -26,6 +27,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
+  // Difine the tab names
   final List<String> _tabs = [
     'home',
     'discover',
@@ -37,6 +39,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   late int _selectedIndex = _tabs.indexOf(widget.tab);
   bool _isLongPress = false;
 
+  // Handles the tap events on the tabs.
   void _onTap(int index) {
     context.go('/${_tabs[index]}');
     setState(() {
@@ -44,6 +47,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     });
   }
 
+  // Handles the tap event on the post video button.
   void _onPostVideoButtonTap() {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -61,98 +65,91 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     final isDark = isDarkMode(context);
 
+    // Determine the color for the current selected index and theme mode.
+    final color = _selectedIndex == 0 || isDark ? Colors.black : Colors.white;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor:
-          _selectedIndex == 0 || isDark ? Colors.black : Colors.white,
+      backgroundColor: color,
       body: Stack(
         children: [
-          Offstage(
-            offstage: _selectedIndex != 0,
-            child: const VideoTimelineScreen(),
-          ),
-          Offstage(
-            offstage: _selectedIndex != 1,
-            child: const DiscoverScreen(),
-          ),
-          Offstage(
-            offstage: _selectedIndex != 3,
-            child: const InboxScreen(),
-          ),
-          Offstage(
-            offstage: _selectedIndex != 4,
-            child: const UserProfileScreen(
-              username: "목화",
-              tab: "",
-            ),
-          ),
+          _buildOffstageWidget(const VideoTimelineScreen(), 0),
+          _buildOffstageWidget(const DiscoverScreen(), 1),
+          _buildOffstageWidget(const InboxScreen(), 3),
+          _buildOffstageWidget(
+              const UserProfileScreen(username: '목화', tab: ""), 4),
         ],
       ),
-      bottomNavigationBar: Container(
-        color: _selectedIndex == 0 || isDark ? Colors.black : Colors.white,
-        padding: const EdgeInsets.only(
-          bottom: Sizes.size32,
+      bottomNavigationBar: _buildBottomNavigationBar(color),
+    );
+  }
+
+  // Builds an offstage for the given child widget and index.
+  Widget _buildOffstageWidget(Widget child, int index) {
+    return Offstage(
+      offstage: _selectedIndex != index,
+      child: child,
+    );
+  }
+
+  // Builds the bottom navigation bar.
+  Container _buildBottomNavigationBar(Color color) {
+    return Container(
+      color: color,
+      padding: const EdgeInsets.only(bottom: Sizes.size32),
+      child: Padding(
+        padding: const EdgeInsets.all(Sizes.size12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildNavTab(
+                "Home", FontAwesomeIcons.house, FontAwesomeIcons.house, 0),
+            _buildNavTab("Discover", FontAwesomeIcons.compass,
+                FontAwesomeIcons.solidCompass, 1),
+            Gaps.h24,
+            _buildPostVideoButton(),
+            Gaps.h24,
+            _buildNavTab("Inbox", FontAwesomeIcons.message,
+                FontAwesomeIcons.solidMessage, 3),
+            _buildNavTab("Profile", FontAwesomeIcons.user,
+                FontAwesomeIcons.solidUser, 4),
+          ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(Sizes.size12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              NavTab(
-                text: "Home",
-                isSelected: _selectedIndex == 0,
-                icon: FontAwesomeIcons.house,
-                selectedIcon: FontAwesomeIcons.house,
-                onTap: () => _onTap(0),
-                selectedIndex: _selectedIndex,
-              ),
-              NavTab(
-                text: "Discover",
-                isSelected: _selectedIndex == 1,
-                icon: FontAwesomeIcons.compass,
-                selectedIcon: FontAwesomeIcons.solidCompass,
-                onTap: () => _onTap(1),
-                selectedIndex: _selectedIndex,
-              ),
-              Gaps.h24,
-              GestureDetector(
-                onLongPress: () {
-                  setState(() {
-                    _isLongPress = true;
-                  });
-                },
-                onLongPressUp: () {
-                  setState(() {
-                    _isLongPress = false;
-                  });
-                  _onPostVideoButtonTap();
-                },
-                onTap: _onPostVideoButtonTap,
-                child: PostVideoButton(
-                  isLongPress: _isLongPress,
-                  inverted: _selectedIndex != 0,
-                ),
-              ),
-              Gaps.h24,
-              NavTab(
-                text: "Inbox",
-                isSelected: _selectedIndex == 3,
-                icon: FontAwesomeIcons.message,
-                selectedIcon: FontAwesomeIcons.solidMessage,
-                onTap: () => _onTap(3),
-                selectedIndex: _selectedIndex,
-              ),
-              NavTab(
-                text: "Profile",
-                isSelected: _selectedIndex == 4,
-                icon: FontAwesomeIcons.user,
-                selectedIcon: FontAwesomeIcons.solidUser,
-                onTap: () => _onTap(4),
-                selectedIndex: _selectedIndex,
-              ),
-            ],
-          ),
-        ),
+      ),
+    );
+  }
+
+  // Builds a nav tab for the given text, icons and index.
+  Widget _buildNavTab(
+      String text, IconData icon, IconData selectedIcon, int index) {
+    return NavTab(
+      text: text,
+      isSelected: _selectedIndex == index,
+      icon: icon,
+      selectedIcon: selectedIcon,
+      onTap: () => _onTap(index),
+      selectedIndex: _selectedIndex,
+    );
+  }
+
+  // Builds the post video button.
+  Widget _buildPostVideoButton() {
+    return GestureDetector(
+      onLongPress: () {
+        setState(() {
+          _isLongPress = true;
+        });
+      },
+      onLongPressUp: () {
+        setState(() {
+          _isLongPress = false;
+        });
+        _onPostVideoButtonTap();
+      },
+      onTap: _onPostVideoButtonTap,
+      child: PostVideoButton(
+        isLongPress: _isLongPress,
+        inverted: _selectedIndex != 0,
       ),
     );
   }
