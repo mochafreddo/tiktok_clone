@@ -5,21 +5,18 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class ActivityScreen extends StatefulWidget {
+  static const String routeName = 'activity';
+  static const String routeURL = '/activity';
+
   const ActivityScreen({super.key});
 
   @override
   State<ActivityScreen> createState() => _ActivityScreenState();
 }
 
-// ticker는 매 애니메이션 프레임마다 호출되는 시계
-// Animation이 ticker를 사용한다.
-// ticker는 시스템 리소스를 아주 많이 사용한다.
-// 그래서 SingleTickerProviderStateMixin을 사용한다.
-// SingleTickerProviderStateMixin은 ticker를 제공하지만 위젯이 활성화되어 있지 않으면 ticker가 리소스를 사용하지 않도록 해준다.
 class _ActivityScreenState extends State<ActivityScreen>
     with SingleTickerProviderStateMixin {
   final List<String> _notifications = List.generate(20, (index) => '${index}h');
-  // index: 각 아이템의 번호
 
   final List<Map<String, dynamic>> _tabs = [
     {

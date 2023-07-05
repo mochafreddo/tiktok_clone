@@ -5,7 +5,15 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class ChatDetailScreen extends StatefulWidget {
-  const ChatDetailScreen({super.key});
+  static const String routeName = 'chatDetail';
+  static const String routeURL = ':chatId';
+
+  final String chatId;
+
+  const ChatDetailScreen({
+    super.key,
+    required this.chatId,
+  });
 
   @override
   State<ChatDetailScreen> createState() => _ChatDetailScreenState();
@@ -26,8 +34,8 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               const CircleAvatar(
                 radius: Sizes.size24,
                 foregroundImage: NetworkImage(
-                    "https://avatars.githubusercontent.com/u/76798197?v=4"),
-                child: Text("니꼬"),
+                    'https://avatars.githubusercontent.com/u/3612017?v=4'),
+                child: Text('니꼬'),
               ),
               Positioned(
                 bottom: 0,
@@ -47,9 +55,9 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               ),
             ],
           ),
-          title: const Text(
-            "니꼬",
-            style: TextStyle(
+          title: Text(
+            '니꼬 (${widget.chatId})',
+            style: const TextStyle(
               fontWeight: FontWeight.w600,
             ),
           ),
