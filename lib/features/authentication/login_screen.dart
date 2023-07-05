@@ -5,7 +5,6 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/login_form_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
-import 'package:tiktok_clone/features/authentication/username_screen.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -56,19 +55,19 @@ class LoginScreen extends StatelessWidget {
               AuthButton(
                 icon: FaIcon(FontAwesomeIcons.facebook),
                 text: "Continue with Facebook",
-                target: UsernameScreen(),
+                target: LoginFormScreen(),
               ),
               Gaps.v16,
               AuthButton(
                 icon: FaIcon(FontAwesomeIcons.apple),
-                target: UsernameScreen(),
+                target: LoginFormScreen(),
                 text: "Continue with Apple",
               ),
               Gaps.v16,
               AuthButton(
                 icon: FaIcon(FontAwesomeIcons.google),
                 text: "Continue with Google",
-                target: UsernameScreen(),
+                target: LoginFormScreen(),
               ),
             ],
           ),
