@@ -35,12 +35,18 @@ class _VideoPostState extends State<VideoPost>
   bool _isPaused = false;
   bool _isMuted = false;
   bool _showFullText = false;
+  bool _autoMute = videoConfig.autoMute;
 
   @override
   void initState() {
     super.initState();
     _initVideoPlayer();
     _initAnimationController();
+    videoConfig.addListener(() {
+      setState(() {
+        _autoMute = videoConfig.autoMute;
+      });
+    });
   }
 
   @override
@@ -181,12 +187,12 @@ class _VideoPostState extends State<VideoPost>
             top: 40,
             child: IconButton(
               icon: FaIcon(
-                VideoConfigData.of(context).autoMute
+                _autoMute
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
               ),
-              onPressed: VideoConfigData.of(context).toggleMuted,
+              onPressed: videoConfig.toggleAutoMute,
             ),
           ),
           // Play icon animation
