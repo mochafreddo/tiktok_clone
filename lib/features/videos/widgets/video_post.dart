@@ -35,7 +35,7 @@ class _VideoPostState extends State<VideoPost>
   bool _isPaused = false;
   bool _isMuted = false;
   bool _showFullText = false;
-  bool _autoMute = videoConfig.autoMute;
+  bool _autoMute = videoConfig.value;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _VideoPostState extends State<VideoPost>
     _initAnimationController();
     videoConfig.addListener(() {
       setState(() {
-        _autoMute = videoConfig.autoMute;
+        _autoMute = videoConfig.value;
       });
     });
   }
@@ -192,7 +192,9 @@ class _VideoPostState extends State<VideoPost>
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
               ),
-              onPressed: videoConfig.toggleAutoMute,
+              onPressed: () {
+                videoConfig.value = !videoConfig.value;
+              },
             ),
           ),
           // Play icon animation
