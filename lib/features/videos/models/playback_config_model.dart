@@ -3,7 +3,7 @@ class PlaybackConfigModel {
   bool autoplay;
 
   PlaybackConfigModel({
-    required this.muted = false,
-    required this.autoplay = false,
+    required this.muted,
+    required this.autoplay,
   });
 }
