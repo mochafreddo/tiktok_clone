@@ -19,16 +19,13 @@ void main() async {
   final preferences = await SharedPreferences.getInstance();
   final repository = VideoPlaybackConfigRepository(preferences);
 
-  runApp(
-    ProviderScope(
-      overrides: [
-        playbackConfigProvider.overrideWith(
-          () => PlaybackConfigViewModel(repository),
-        )
-      ],
-      child: const TikTokApp(),
-    ),
-  );
+  runApp(ProviderScope(
+    overrides: [
+      playbackConfigProvider
+          .overrideWith(() => PlaybackConfigViewModel(repository))
+    ],
+    child: const TikTokApp(),
+  ));
 }
 
 class TikTokApp extends StatelessWidget {
