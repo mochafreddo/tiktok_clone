@@ -61,6 +61,10 @@ dependencies:
   provider: 6.0.5
   shared_preferences: ^2.2.0
   flutter_riverpod: 2.3.6
+  firebase_core: ^2.14.0
+  firebase_auth: ^4.6.3
+  cloud_firestore: ^4.8.2
+  firebase_storage: ^11.2.4
 
 dev_dependencies:
   flutter_test:
